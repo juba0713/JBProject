@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+</head>
+<body>
+	<div th:fragment="sidebar" class="sidebar">
+		<div class="sidebar-header">			
+			<div>
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" id="menu" class="menu">
+					<path d="M21 10H3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M21 6H3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M21 14H3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M21 18H3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+				</svg>
+				<span>JB Project</span>
+			</div>
+			
+			<div class="dark-light-mode">
+			  <input type="checkbox" class="checkbox" id="checkbox">
+			  <label for="checkbox" class="checkbox-label">
+			    <i class="fas fa-moon"></i>
+			    <i class="fas fa-sun"></i>
+			    <span class="ball"></span>
+			  </label>
+			</div>
+		</div>
+		<div class="sidebar-content">
+			<hr>
+			<ul>
+				<li>MAIN</li>
+				<li class="current-screen">
+					<a th:href="@{/}">
+						<span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>HOME</span>
+					</a>
+				</li>
+			</ul>		
+			<hr>
+			<ul>
+				<li>DOCUMENTS</li>
+				<li>
+					<a th:href="@{/about}">
+						<span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>ABOUT</span>
+					</a>					
+				</li>
+				<li>
+					<a th:href="@{/resume}">
+						<span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>RESUME</span>
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/cv}">
+						<span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>CV</span>
+					</a>
+				</li>
+			</ul>
+			<hr>
+			<ul>
+				<li>SYSTEMS</li>
+				<li>
+					<a th:href="@{/pro-quest}">
+						<span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>ProRequest</span>
+					</a>
+				</li>
+			</ul>	
+			<ul>
+				<li>DESIGNS</li>
+				<li>
+					<span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+					<span>NONE</span>
+				</li>
+			</ul>	
+			<ul>
+				<li>TOOLS</li>
+				<li>
+					<span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+					<span>NONE</span>
+				</li>
+			</ul>	
+		</div>
+		<script>
+			const menu = document.querySelector("#menu");
+			
+			if(menu){
+				menu.addEventListener('click', function(){
+					this.closest('.sidebar').classList.toggle('active');
+				});	
+			}
+		</script>
+	</div>
+</body>
+</html>
