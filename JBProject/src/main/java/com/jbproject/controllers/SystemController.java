@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
+public class SystemController {
 
 	@GetMapping
 	public String showHome() {
@@ -27,5 +27,11 @@ public class HomeController {
 	public String showCV() {
 		
 		return "";
+	}
+	
+	
+	@GetMapping("/pro-request")
+	public String showProRequest() {
+		return "pro-request/login";
 	}
 }
