@@ -1,0 +1,28 @@
+.content{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.content-header{
+	padding: 10px 10px;
+	background: #fff;
+	box-sizing: border-box;
+	width: 100%;
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.content-header span{
+	font-size: 1.2rem;
+}
+
+.content-body{
+	display: flex;
+	height: 100%;
+	width: 100%;
+	background: #fff;
+	border-radius: 5px;
+}

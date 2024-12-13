@@ -51,7 +51,22 @@
 							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
-						<span>HOME</span>
+						<span>USERS</span>
+					</a>
+				</li>
+			</ul>
+			<hr>
+			<ul>
+				<li>ORGANIZATION</li>
+				<li>
+					<a th:href="@{/}">
+						<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>ORGANIZATIONS</span>
 					</a>
 				</li>
 			</ul>
@@ -85,6 +100,54 @@
 					</a>
 				</li>
 			</ul>
+		</div>
+		<!-- ADMIN SIDEBAR -->
+		<div th:fragment="sidebarAdmin" class="sidebar">
+		<div class="sidebar-header">
+			<img th:src="@{/images/pro-request/pro-request-logo.png}" class="menu"/>
+		</div>		
+		<div class="sidebar-content">
+			<hr>
+			<ul>
+				<li>MAIN</li>
+				<li class="current-screen">
+					<a th:href="@{/}">				
+						<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>	
+						<span>HOME</span>
+					</a>
+				</li>
+			</ul>
+			<hr>
+			<ul>
+				<li>USER</li>
+				<li>
+					<a th:href="@{/pro-request/admin/employee}">
+						<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>EMPLOYEE</span>
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/}">
+						<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>ADMIN</span>
+					</a>
+				</li>
+			</ul>
 			<hr>
 			<ul>
 				<li>ORGANIZATION</li>
@@ -96,7 +159,70 @@
 							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
-						<span>HOME</span>
+						<span>ORGANIZATIONS</span>
+					</a>
+				</li>
+			</ul>
+			<hr>
+			<ul>
+				<li>TEMPLATE</li>
+				<li>
+					<a th:href="@{/}">
+						<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>TEMPLATES</span>
+					</a>
+				</li>
+			</ul>
+			<hr>
+			<ul>
+				<li>APPLICATION</li>
+				<li>
+					<a th:href="@{/}">
+						<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>PENDING APPLICATIONS</span>
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/}">
+						<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>APPROVED APPLICATIONS</span>
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/}">
+						<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>REJECTED APPLICATIONS</span>
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/}">
+						<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>CANCELED APPLICATIONS</span>
 					</a>
 				</li>
 			</ul>

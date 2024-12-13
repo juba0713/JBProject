@@ -13,4 +13,10 @@ public class HomeController {
 		
 		return "pro-request/user/home";
 	}
+	
+	@GetMapping("/admin/home")
+	public String showAdminHome() {
+		
+		return "pro-request/admin/home";
+	}
 }
