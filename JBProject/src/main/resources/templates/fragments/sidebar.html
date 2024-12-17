@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -85,7 +86,7 @@
 			<ul>
 				<li>SYSTEMS</li>
 				<li>
-					<a th:href="@{${@environment.getProperty('app.prorequest.domain')}}">
+					<a id="proRequestLink" th:href="@{${@environment.getProperty('app.prorequest.domain')}}">
 						<span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -93,6 +94,17 @@
 							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
 						<span>PRO REQUEST</span>
+					</a>
+				</li>
+				<li>
+					<a id="reviewHiveLink" th:href="@{${@environment.getProperty('app.reviewhive.domain')}}">
+						<span><svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M10.8824 3.94735H3.88239V10.9473H10.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 3.94735H14.8824V10.9473H21.8824V3.94735Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M21.8824 14.9473H14.8824V21.9473H21.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M10.8824 14.9473H3.88239V21.9473H10.8824V14.9473Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>REVIEW HIVE</span>
 					</a>
 				</li>
 			</ul>	
@@ -132,6 +144,36 @@
 				});	
 			}
 		</script>
+		<script th:inline="javascript">
+
+		
+		    const linksToCheck = [
+		        { id: 'proRequestLink', url: /*[[@{${@environment.getProperty('app.prorequest.domain') + '/ping'}}]]*/'' },
+		        { id: 'reviewHiveLink', url: /*[[@{${@environment.getProperty('app.reviewhive.domain') + '/ping'}}]]*/'' }
+		    ];
+		
+		    async function checkDomainStatus() {
+		        for (const link of linksToCheck) {
+					console.log(link);
+		            const anchorTag = document.getElementById(link.id);
+		            try {
+		                const response = await fetch(link.url);
+		                if (!response.ok) {
+		                    throw new Error('Domain unreachable');
+		                }
+		            } catch (error) {
+		                console.error(`${link.url} is not reachable`);
+		                if (anchorTag) {
+		                    anchorTag.style.pointerEvents = 'none';
+		                    anchorTag.style.opacity = '0.5';
+		                    anchorTag.querySelector('span').innerHTML += '(Not Running)';
+		                }
+		            }
+		        }
+		    }
+		
+		    checkDomainStatus();
+		</script>		
 	</div>
 </body>
 </html>
