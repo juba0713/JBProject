@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" th:href="@{/css/common.css}" />
+<link rel="stylesheet" th:href="@{/css/fragments/header.css}" />
+<link rel="stylesheet" th:href="@{/css/fragments/sidebar.css}" />
+<link rel="stylesheet" th:href="@{/css/users.css}" />
+</head>
+<body>
+	<div th:replace="~{/fragments/header :: header}"></div>
+	<div class="container">
+		<div th:replace="~{/fragments/sidebar :: sidebarAdmin}"></div>
+		<div class="content">
+			<div class="content-header">
+				<span>EMPLOYEES</span>
+				<a class="action-btn">CREATE EMPLOYEE</a>
+			</div>	
+			<div class="content-body">
+				<div class="table-content">
+					<table>
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>FULL NAME</th>
+								<th>USER ID</th>
+								<th>ORGANIZATION</th>
+								<th>EMPLOYEE STATUS</th>
+								<th>CREATE DATE</th>
+								<th>UPDATE DATE</th>
+								<th>ACTION</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+							</tr>
+							<tr>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+							</tr>
+							<tr>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+								<td>Test</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>
