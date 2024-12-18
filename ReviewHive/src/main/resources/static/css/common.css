@@ -62,7 +62,7 @@ main{
 	align-items: center;
 	width: auto;
 	font-size: 0.8rem;
-	padding: 10px 10px;
+	padding: 10px 20px;
 	box-sizing: border-box;
 	border-radius: 5px;
 	background: #004A99;
@@ -76,7 +76,8 @@ main{
 	font-size: 0.8rem;
 }
 
-.action-btn svg{
+.action-btn svg,
+.action-btn img{
 	width: 0.8rem;
 	height: 0.8rem;
 }
@@ -85,17 +86,35 @@ main{
 	background: #3C6D85;
 }
 
+*:disabled{
+	cursor: not-allowed;
+}
+
 a{
 	text-decoration: none;
 	color: #000;
+}
+
+input,
+select,
+textarea {
+    border: 1px solid #ccc;
+    outline: none; /* Optional: Removes default focus outline */
+    border-radius: 5px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border: 1px solid #004A99 !important;
 }
 
 /* The switch - the box around the slider */
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 30px;
+  width: 40px;
+  height: 22px;
 }
 
 /* Hide default HTML checkbox */
@@ -121,10 +140,10 @@ a{
 .slider:before {
   position: absolute;
   content: "";
-  height: 22px;
-  width: 25px;
-  left: 4px;
-  bottom: 4px;
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
@@ -139,16 +158,48 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  -webkit-transform: translateX(15px);
+  -ms-transform: translateX(15px);
+  transform: translateX(18px);
 }
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px; 
+  border-radius: 30px; 
 }
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.message-container{
+	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	z-index: 1000;
+  	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  	padding: 50px;
+  	border-radius: 5px;
+  	font-size: 0.8rem;
+  	transition: opacity 0.5s ease-out;
+  	background: #fff;
+}
+
+.message-container .success{
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	justify-content: center;
+  	gap: 10px;
+}
+
+.message-container svg{
+	width: 50px;
+	height: 50px;
+}
+
+.message-container.hidden{
+	opacity: 0;
+    pointer-events: none;
 }

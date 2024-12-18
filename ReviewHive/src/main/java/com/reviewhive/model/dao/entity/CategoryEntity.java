@@ -26,14 +26,20 @@ public class CategoryEntity {
 	@Column(nullable=false)
 	private String categoryName;
 	
+	@Column(nullable=false)
+	private String description;
+	
 	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean isOpen;
+	
+	@Column(nullable = false)
+	private String hexColor;
 	
 	@Column(nullable = false)
 	private Timestamp createdDate;
 	
 	@Column(nullable = false)
-	private Timestamp updateDate;
+	private Timestamp updatedDate;
 	
 	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean deleteFlg;
