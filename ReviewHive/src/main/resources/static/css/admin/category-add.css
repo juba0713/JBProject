@@ -1,0 +1,85 @@
+.container{
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.content{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	height: min-content;
+	max-height: 100%;
+}
+
+.content-header{
+	padding: 10px 20px;
+	background: #fff;
+	box-sizing: border-box;
+	width: 100%;
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.content-header span:nth-child(1){
+	font-size: 1rem;
+}
+
+.content-body{
+	display: flex;
+	height: 100%;
+	width: 100%;
+	background: #fff;
+	border-radius: 5px;	
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+form{
+	width: 100%;
+	display: flex;
+	gap: 20px;
+	flex-direction: column;
+}
+
+form .input-fields{
+	display: flex;
+	gap: 50px;
+}
+
+form .input-fields div{ 
+	width: 100%;
+	display: flex;
+	flex-direction: column;	
+}
+
+form .input-fields input[type=text],
+form .input-fields select,
+form .input-fields textarea{
+	padding: 10px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	border: 1px solid #D3D3D3;
+}
+
+form .buttons{
+	display: flex;
+	justify-content: flex-end;
+}
+
+textarea{
+	height: 100px;
+	resize: none;
+}
+
+input[type="color"] {
+        width: 100%; 
+		height: 100%;
+        border: 1px solid #ccc; 
+        border-radius: 5px; 
+        padding: 5px; 
+        cursor: pointer; 
+        background: #fff;
+    }

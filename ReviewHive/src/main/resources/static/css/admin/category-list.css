@@ -22,7 +22,7 @@
 }
 
 .content-header span:nth-child(1){
-	font-size: 1.2rem;
+	font-size: 1rem;
 }
 
 .content-body{
@@ -31,6 +31,19 @@
 	width: 100%;
 	background: #fff;
 	border-radius: 5px;	
+	flex-direction: column;
+}
+
+.filter-content{
+	display: flex;
+	justify-content: space-between;
+	padding: 20px 20px 0 20px;
+	box-sizing: border-box;
+}
+
+.filter-content div:nth-child(2){
+	display: flex;
+	gap: 10px;
 }
 
 .table-content{
@@ -46,7 +59,7 @@ table{
 }
 
 table thead{
-	background: #1B4965;
+	background: #004A99;
 }
 
 thead th{
@@ -63,4 +76,49 @@ tbody td{
 
 tbody tr{
 	border-bottom: 1px dashed #000;
+	z-index: 1;
 }
+
+td {
+    text-align: center;
+    vertical-align: middle; 
+}
+
+td .action-btn {
+    display: inline-block; 
+    margin: 0 5px; 
+}
+
+td form {
+    display: inline-block; 
+    margin: 0; 
+}
+
+.delete-btn,
+.edit-btn{
+	padding: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.delete-btn img,
+.edit-btn img{
+	width: 20px;
+	height: 20px;
+}
+
+.description-td{
+	max-width: 300px;
+}
+
+td .description {
+    max-width: 100%; /* Set your desired maximum width */
+    word-wrap: break-word; /* Break words that exceed the width */
+    overflow-wrap: break-word; /* Break long words */
+    white-space: normal; /* Ensure text wraps to the next line */
+    display: inline-block; /* Ensures block-like behavior for alignment */
+    text-align: left;
+}
+
+

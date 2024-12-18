@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @added 12/17/2024
  */
 @RestController
-public class PingController {
+public class PingAPI {
 
 	@GetMapping("/ping")
     public ResponseEntity<String> ping() {

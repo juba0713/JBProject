@@ -5,21 +5,24 @@
 <meta charset="UTF-8">
 <title>Review Hive - Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <link rel="stylesheet" th:href="@{/css/fragments/header.css}"/>
 <link rel="stylesheet" th:href="@{/css/fragments/sidebar.css}"/>
 <link rel="stylesheet" th:href="@{/css/common.css}"/>
 <link rel="stylesheet" th:href="@{/css/admin/category-list.css}"/>
 
 </head>
-<body>
+<body th:object="${categoryDto}">
 	<main>
+		<div th:replace="~{/fragments/message-container :: messageContainer}"></div>
 		<nav th:replace="~{/fragments/header :: header}"></nav>
 		<div class="container">
 			<nav th:replace="~{/fragments/sidebar :: sidebarAdmin}"></nav>
 			<div class="content">
 				<div class="content-header">
 				<span>CATEGORY</span>
-				<a class="action-btn">
+				<a class="action-btn" th:href="@{/admin/category-add}">
 					<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<g clip-path="url(#clip0_535_96)">
 					<rect width="100" height="100" fill="#004A99"/>
@@ -35,29 +38,37 @@
 				</a>
 			</div>	
 			<div class="content-body">
+				<div class="filter-content">
+					<div>
+						
+					</div>
+					<div>
+						<button class="action-btn prev-btn">
+							<img th:src="@{/icons/prev.svg}">
+							<span>PREV</span>
+						</button>
+						<select class="select-tag">
+							<option>1</option>
+						</select>
+						<button class="action-btn next-btn">			
+							<span>NEXT</span>
+							<img th:src="@{/icons/next.svg}">
+						</button>
+					</div>
+				</div>
 				<div class="table-content">
 					<table>
 						<thead>
 							<tr>
 								<th>ID</th>
 								<th>CATEGORY</th>
+								<th>DESCRIPTION</th>
 								<th>STATUS</th>
 								<th>ACTION</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>Test</td>
-								<td>Test</td>
-								<td>
-									<label class="switch">
-									  <input type="checkbox">
-									  <span class="slider round"></span>
-									</label>
-								</td>
-								<td>Test</td>
-							</tr>
-							
+									
 						</tbody>
 					</table>
 				</div>
@@ -66,5 +77,9 @@
 			</div>
 		</div>
 	</main>
+	<script th:inline="javascript">
+		const webDto = /*[[${categoryDto}]]*/'';
+	</script>
+	<script th:src="@{/js/category-list.js}"></script>
 </body>
 </html>
