@@ -61,9 +61,9 @@ public class AdminCategoryController {
 	@PostMapping("/category-add")
 	public String postCategoryAddScreen(
 			Model model,
-			@ModelAttribute @Valid CategoryDto webDto,
-			RedirectAttributes ra,
-			BindingResult result) {
+			@Valid @ModelAttribute CategoryDto webDto,
+			BindingResult result,
+			RedirectAttributes ra) {
 		
 		if(result.hasErrors()) {
 			model.addAttribute("categoryDto", webDto);

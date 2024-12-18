@@ -2,11 +2,12 @@ package com.reviewhive.model.dto;
 
 import java.util.List;
 
+import com.reviewhive.common.constant.CommonConstant;
+import com.reviewhive.common.constant.MessageConstant;
 import com.reviewhive.model.dao.entity.CategoryDetailsEntity;
 import com.reviewhive.model.dao.entity.CategoryEntity;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 /**
@@ -18,16 +19,16 @@ public class CategoryDto {
 	
 	private int id;
 	
-	@NotEmpty(message="AW")
-	private String categoryName;
+	@NotBlank(message= MessageConstant.CATEGORY_NAME_REQUIRED)
+	public String categoryName;
 	
-	@NotBlank(message="Category Color is required!")
-	private String categoryColor;
+	@NotBlank(message= MessageConstant.CATEGORY_NAME_REQUIRED)
+	public String categoryColor;
 	
-	@NotBlank(message="Category Status is required!")
+	@NotBlank(message= MessageConstant.CATEGORY_STATUS_REQUIRED)
 	private String categoryStatus;
 	
-	@NotBlank(message="Category Description is required!")
+	@NotBlank(message= MessageConstant.CATEGORY_DESCRIPTION_REQUIRED)
 	private String categoryDescription;
 	
 	private CategoryEntity category;
