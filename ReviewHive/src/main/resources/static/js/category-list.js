@@ -50,34 +50,42 @@ function populateTable(categories){
 	
 	tableBody.innerHTML = '';
 	
-	for(let category of categories){
-		const isChecked = category.isOpen ? 'checked' : '';
-		const categoryHTML = `<tr categoryId="${category.id}">
-								<td>${category.id}</td>
-								<td>${category.categoryName}</td>
-								<td class="description-td">
-									<div class="description">
-								        ${category.description}
-								    </div>
-								</td>
-								<td>
-									<label class="switch">
-									  <input type="checkbox" ${isChecked} class="status-toggle">
-									  <span class="slider round"></span>
-									</label>
-								</td>
-								<td>
-									
-										<a class="action-btn edit-btn" href="/admin/category-edit?id=${category.id}">
-											<img src="/icons/edit.svg">
-										</a>
-										<button class="action-btn delete-btn" data-toggle="modal" data-target="#deleteModal">
-											<img src="/icons/delete.svg">
-										</button>
-								</td>
-							</tr>		`;
-							
-		tableBody.innerHTML += categoryHTML;	
+	if(categories.length != 0){
+		for(let category of categories){
+			const isChecked = category.isOpen ? 'checked' : '';
+			const categoryHTML = `<tr categoryId="${category.id}">
+									<td>${category.id}</td>
+									<td>${category.categoryName}</td>
+									<td class="description-td">
+										<div class="description">
+									        ${category.description}
+									    </div>
+									</td>
+									<td>
+										<label class="switch">
+										  <input type="checkbox" ${isChecked} class="status-toggle">
+										  <span class="slider round"></span>
+										</label>
+									</td>
+									<td>
+										
+											<a class="action-btn edit-btn" href="/admin/category-edit?id=${category.id}">
+												<img src="/icons/edit.svg">
+											</a>
+											<button class="action-btn delete-btn" data-toggle="modal" data-target="#deleteModal">
+												<img src="/icons/delete.svg">
+											</button>
+									</td>
+								</tr>		`;
+								
+			tableBody.innerHTML += categoryHTML;	
+		}
+	}else{
+		const categoryHTML = `<tr>
+									<td colspan="5">No Data</td>									
+								</tr>		`;
+								
+			tableBody.innerHTML += categoryHTML;
 	}
 	
 	document.querySelectorAll('.status-toggle').forEach(toggle => toggle.addEventListener('change', function(){

@@ -12,34 +12,34 @@ import lombok.Data;
 
 /**
  * @author Julius P. Basas
- * @added 12/17/2024
+ * @added 12/19/2024
  */
 @Data
 @Entity
-@Table(name="m_category")
-public class CategoryEntity {
-	
+@Table(name="m_questionaire")
+public class QuestionaireEntity {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	@Column(nullable=false)
-	private String categoryName;
+	private int categoryId;
 	
-	@Column(nullable=false) 
-	private String description;
+	@Column(nullable=false)
+	private String questionaireName;
+	
+	@Column(nullable=false)
+	private String abbreviation;
 	
 	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean isOpen;
 	
 	@Column(nullable = false)
-	private String hexColor;
-	
-	@Column(nullable = false)
 	private Timestamp createdDate;
 	
 	@Column(nullable = false)
-	private Timestamp updatedDate;
+	private Timestamp updateDate;
 	
 	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean deleteFlg;
