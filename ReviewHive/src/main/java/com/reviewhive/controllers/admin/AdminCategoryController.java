@@ -121,6 +121,12 @@ public class AdminCategoryController {
 		return "redirect:/admin/category-list";
 	}
 	
+	/**
+	 * Delete Category
+	 * @param webDto
+	 * @param ra
+	 * @return
+	 */
 	@PostMapping("/category-delete")
 	public String postCategoryDeleteScreen(
 			@ModelAttribute CategoryDto webDto,
