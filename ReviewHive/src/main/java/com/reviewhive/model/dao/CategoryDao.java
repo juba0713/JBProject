@@ -28,7 +28,7 @@ public interface CategoryDao extends JpaRepository<CategoryEntity, Integer>{
 	/*
 	 * Query for Getting All Query
 	 */
-	public static final String GET_ALL_CATEGORY = "SELECT e.id, "
+	public static final String GET_ALL_CATEGORY_BY_PAGE = "SELECT e.id, "
 			+ "e.category_name, "
 			+ "e.description, "
 			+ "e.is_open, "
@@ -45,8 +45,8 @@ public interface CategoryDao extends JpaRepository<CategoryEntity, Integer>{
 	 * @return List<Object[]>
 	 * @throws DataAccessException
 	 */
-	@Query(value=GET_ALL_CATEGORY, nativeQuery=true)
-	public List<Object[]> getAllCategoryRaw(
+	@Query(value=GET_ALL_CATEGORY_BY_PAGE, nativeQuery=true)
+	public List<Object[]> getAllCategoryByPageRaw(
 			@Param("limit") double limit,
 			@Param("offset") int offset) throws DataAccessException;
 	
@@ -56,13 +56,13 @@ public interface CategoryDao extends JpaRepository<CategoryEntity, Integer>{
 	 * @param offset
 	 * @return List<CategoryDetailsEntity>
 	 */
-	default List<CategoryDetailsEntity> getAllCategory(int limit, int offset){
-		List<Object[]> rawResults = getAllCategoryRaw(limit, offset);
+	default List<CategoryDetailsEntity> getAllCategoryByPage(int limit, int offset){
+		List<Object[]> rawResults = getAllCategoryByPageRaw(limit, offset);
 	    List<CategoryDetailsEntity> categories = new ArrayList<>();
 
 	    for (Object[] objects : rawResults) {
-	    	CategoryDetailsEntity applicant = new CategoryDetailsEntity(objects);  
-	    	categories.add(applicant);
+	    	CategoryDetailsEntity category = new CategoryDetailsEntity(objects);  
+	    	categories.add(category);
 	    }
 
 	    return categories;
@@ -104,7 +104,7 @@ public interface CategoryDao extends JpaRepository<CategoryEntity, Integer>{
 	public CategoryEntity getCategoryById(int id) throws DataAccessException;
 	
 	/*
-	 * Query for updating category status
+	 * Query for updating category all
 	 */
 	public static final String UPDATE_CATEGORY = "UPDATE m_category "
 			+ "SET category_name = :categoryName, "
@@ -115,7 +115,7 @@ public interface CategoryDao extends JpaRepository<CategoryEntity, Integer>{
 			+ "WHERE id = :id ";
 	
 	/**
-	 * Update Category Status
+	 * Update Category all
 	 * @param status
 	 * @param id
 	 */
@@ -144,4 +144,20 @@ public interface CategoryDao extends JpaRepository<CategoryEntity, Integer>{
 	@Modifying
 	@Query(value=UPDATE_CATEGORY_DELETE, nativeQuery=true)
 	public void updateCategoryDelete(@Param("id") int id);
+	
+	/*
+	 * Query for retrieving all category without paging
+	 */
+	public static final String GET_ALL_CATEGORY = "SELECT e "
+			+ "FROM CategoryEntity e "
+			+ "WHERE e.isOpen = true "
+			+ "AND e.deleteFlg = false ";
+	
+	/**
+	 * Get All Category
+	 * @return List<CategoryEntity>
+	 * @throws DataAccessException
+	 */
+	@Query(value=GET_ALL_CATEGORY)
+	public List<CategoryEntity> getAllCategory() throws DataAccessException;
 }

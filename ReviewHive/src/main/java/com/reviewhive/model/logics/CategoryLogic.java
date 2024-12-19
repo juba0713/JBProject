@@ -25,7 +25,7 @@ public interface CategoryLogic {
 	 * Get All Category
 	 * @param page
 	 */
-	public List<CategoryDetailsEntity> getAllCategory(int page);
+	public List<CategoryDetailsEntity> getAllCategoryByPage(int page);
 	
 	/**
 	 * Update Category Status
@@ -61,4 +61,10 @@ public interface CategoryLogic {
 	 * @return
 	 */
 	public CategoryEntity getCategoryById(int id);
+	
+	/**
+	 * Get All Category
+	 * @return List<CategoryEntity>
+	 */
+	public List<CategoryEntity> getAllCategory();
 }

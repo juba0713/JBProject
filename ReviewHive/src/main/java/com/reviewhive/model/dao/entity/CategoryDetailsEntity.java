@@ -5,6 +5,10 @@ import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * @author Julius P. Basas
+ * @added 12/18/2024
+ */
 @Data
 @AllArgsConstructor
 public class CategoryDetailsEntity {

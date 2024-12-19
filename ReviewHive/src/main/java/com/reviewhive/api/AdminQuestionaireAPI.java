@@ -1,6 +1,5 @@
 package com.reviewhive.api;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,56 +9,52 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reviewhive.common.constant.CommonConstant;
-import com.reviewhive.model.dto.CategoryDto;
-import com.reviewhive.model.services.CategoryService;
+import com.reviewhive.model.dto.QuestionaireDto;
+import com.reviewhive.model.services.QuestionaireService;
 
-/**
- * @author Julius P. Basas
- * @added 12/18/2024
- */
 @RestController
-@RequestMapping("/admin/api/category")
-public class AdminCategoryAPI {
-	
+@RequestMapping("/admin/api/questionaire")
+public class AdminQuestionaireAPI {
+
 	@Autowired
-	private CategoryService categoryService;
+	private QuestionaireService questionaireService;
 	
 	/**
-	 * Get All Category
+	 * Get All Questionaire By Page
 	 * @param page
 	 * @return
 	 */
 	@GetMapping("/get-all")
-	public ResponseEntity<CategoryDto> getAllCategory(@RequestParam("page") int page){
+	public ResponseEntity<QuestionaireDto> getAllCategory(@RequestParam("page") int page){
 		
-		CategoryDto inDto = new CategoryDto();
+		QuestionaireDto inDto = new QuestionaireDto();
 		
 		inDto.setPage(page);
 		
-		CategoryDto outDto = categoryService.getAllCategoryByPage(inDto);
+		QuestionaireDto outDto = questionaireService.getAllQuestionaireByPage(inDto);
 		
 		return ResponseEntity.ok(outDto);
 	}
 	
 	/**
-	 * Update Category Status
+	 * Update Questionaire Status
 	 * @param page
 	 * @return
 	 */
 	@PostMapping("/update-status")
-	public ResponseEntity<Void> updateCategoryStatus(
+	public ResponseEntity<Void> updateQuestionaireStatus(
 			@RequestParam("id") int id,
 			@RequestParam("status") String status){
 		
-		CategoryDto inDto = new CategoryDto();
+		QuestionaireDto inDto = new QuestionaireDto();
 		
-		inDto.setCategoryStatus(status);
+		inDto.setQuestionaireStatus(status);
 		
 		inDto.setId(id);
 		
 		inDto.setUpdateType(CommonConstant.UPDATE_STATUS);
 		
-		categoryService.updateCategory(inDto);
+		questionaireService.updateQuestionaire(inDto);
 		
 		return ResponseEntity.ok().build();
 	}

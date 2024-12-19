@@ -38,7 +38,7 @@ public class QuestionEntity {
 	private Timestamp createdDate;
 	
 	@Column(nullable = false)
-	private Timestamp updateDate;
+	private Timestamp updatedDate;
 	
 	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean deleteFlg;

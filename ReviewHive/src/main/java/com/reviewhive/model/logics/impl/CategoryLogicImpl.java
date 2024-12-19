@@ -37,13 +37,13 @@ public class CategoryLogicImpl implements CategoryLogic{
 	 * @param page
 	 */
 	@Override
-	public List<CategoryDetailsEntity> getAllCategory(int page) {
+	public List<CategoryDetailsEntity> getAllCategoryByPage(int page) {
 		
 		int limit = Integer.valueOf(ApplicationPropertiesRead.getProperty("category.limit"));
 		
 		int offset = (page-1)*Integer.valueOf(limit);
 		
-		return categoryDao.getAllCategory(limit, offset);
+		return categoryDao.getAllCategoryByPage(limit, offset);
 	}
 
 	/**
@@ -96,6 +96,16 @@ public class CategoryLogicImpl implements CategoryLogic{
 	public void updateCategoryDelete(int id) {
 		
 		categoryDao.updateCategoryDelete(id);
+	}
+
+	/**
+	 * Get All Category
+	 * @return List<CategoryEntity>
+	 */
+	@Override
+	public List<CategoryEntity> getAllCategory() {
+		
+		return categoryDao.getAllCategory();
 	}
 
 }
