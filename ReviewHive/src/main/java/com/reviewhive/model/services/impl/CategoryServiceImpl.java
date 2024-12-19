@@ -68,8 +68,12 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public void updateCategory(CategoryDto inDto) {
 		
-		Boolean status = inDto.getCategoryStatus().equals("true") ? true : false;
-		
+		Boolean status = false;
+		if(inDto.getUpdateType().equals(CommonConstant.UPDATE_STATUS) ||
+			inDto.getUpdateType().equals(CommonConstant.UPDATE_ALL)){
+			status = inDto.getCategoryStatus().equals("true") ? true : false;
+		}
+			
 		switch(inDto.getUpdateType()) {
 			
 			case CommonConstant.UPDATE_STATUS:
@@ -84,6 +88,11 @@ public class CategoryServiceImpl implements CategoryService{
 						status, 
 						DateFormatUtil.currentDate(), 
 						inDto.getId());
+				
+				break;
+			case CommonConstant.UPDATE_DELETE:
+				
+				categoryLogic.updateCategoryDelete(inDto.getId());
 				
 				break;
 		}

@@ -128,4 +128,20 @@ public interface CategoryDao extends JpaRepository<CategoryEntity, Integer>{
 			@Param("categoryStatus") boolean categoryStatus,
 			@Param("updateDate") Timestamp updateDate,
 			@Param("id") int id);
+	
+	/*
+	 * Query for updating category delete
+	 */
+	public static final String UPDATE_CATEGORY_DELETE = "UPDATE m_category "
+			+ "SET delete_flg = true "
+			+ "WHERE id = :id ";
+	
+	/**
+	 * Update Category Delete
+	 * @param status
+	 * @param id
+	 */
+	@Modifying
+	@Query(value=UPDATE_CATEGORY_DELETE, nativeQuery=true)
+	public void updateCategoryDelete(@Param("id") int id);
 }

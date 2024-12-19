@@ -67,6 +67,15 @@ public class CategoryLogicImpl implements CategoryLogic{
 		return categoryDao.getCategoryById(id);
 	}
 
+	/**
+	 * Update Category All Data
+	 * @param categoryName
+	 * @param categoryDescription
+	 * @param categoryColor
+	 * @param categoryStatus
+	 * @param updatedDate
+	 * @param id
+	 */
 	@Override
 	public void updateCategoryAll(String categoryName, String categoryDescription, String categoryColor,
 			boolean categoryStatus, Timestamp updatedDate, int id) {
@@ -77,8 +86,16 @@ public class CategoryLogicImpl implements CategoryLogic{
 				categoryStatus, 
 				updatedDate,
 				id);
+	}
+
+	/**
+	 * Update Category Delete
+	 * @param id
+	 */
+	@Override
+	public void updateCategoryDelete(int id) {
 		
-		
+		categoryDao.updateCategoryDelete(id);
 	}
 
 }
