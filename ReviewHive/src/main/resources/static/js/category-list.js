@@ -71,11 +71,9 @@ function populateTable(categories){
 										<a class="action-btn edit-btn" href="/admin/category-edit?id=${category.id}">
 											<img src="/icons/edit.svg">
 										</a>
-										<form>
-											<button class="action-btn delete-btn">
-												<img src="/icons/delete.svg">
-											</button>
-										</form>
+										<button class="action-btn delete-btn" data-toggle="modal" data-target="#deleteModal">
+											<img src="/icons/delete.svg">
+										</button>
 								</td>
 							</tr>		`;
 							
@@ -112,6 +110,12 @@ function populateTable(categories){
 	    .catch(error => {
 	        console.error('Error:', error);
 	    });
+	}));
+	
+	document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', function(){
+		const categoryId = this.closest('tr').getAttribute('categoryId');
+		
+		document.querySelector("#hiddenId").setAttribute('value', categoryId);
 	}));
 }
 

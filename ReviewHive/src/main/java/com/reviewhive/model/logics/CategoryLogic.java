@@ -34,8 +34,13 @@ public interface CategoryLogic {
 	public void updateCategoryStatus(boolean status, int id);
 	
 	/**
-	 * Update Category Status
-	 * @param status
+	 * Update Category All Data
+	 * @param categoryName
+	 * @param categoryDescription
+	 * @param categoryColor
+	 * @param categoryStatus
+	 * @param updatedDate
+	 * @param id
 	 */
 	public void updateCategoryAll(String categoryName,
 			String categoryDescription,
@@ -43,6 +48,12 @@ public interface CategoryLogic {
 			boolean categoryStatus,
 			Timestamp updatedDate, 
 			int id);
+	
+	/**
+	 * Update Category Delete
+	 * @param id
+	 */
+	public void updateCategoryDelete(int id);
 	
 	/**
 	 * Get Category by its id

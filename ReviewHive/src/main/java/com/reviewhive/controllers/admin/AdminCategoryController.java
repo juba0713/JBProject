@@ -120,4 +120,20 @@ public class AdminCategoryController {
 		
 		return "redirect:/admin/category-list";
 	}
+	
+	@PostMapping("/category-delete")
+	public String postCategoryDeleteScreen(
+			@ModelAttribute CategoryDto webDto,
+			RedirectAttributes ra) {
+		
+		webDto.setUpdateType(CommonConstant.UPDATE_DELETE);
+		
+		categoryService.updateCategory(webDto);
+		
+		String successMessage = MessageConstant.CATEGORY_DELETED;
+		
+		ra.addFlashAttribute("message", successMessage);
+		
+		return "redirect:/admin/category-list";
+	}
 }

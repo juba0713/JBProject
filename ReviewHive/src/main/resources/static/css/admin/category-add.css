@@ -7,17 +7,17 @@
 .content{
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 1rem;
 	height: min-content;
 	max-height: 100%;
 }
 
 .content-header{
-	padding: 10px 20px;
+	padding: 0.5rem 1rem;
 	background: #fff;
 	box-sizing: border-box;
 	width: 100%;
-	border-radius: 5px;
+	border-radius: 0.25rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -32,21 +32,21 @@
 	height: 100%;
 	width: 100%;
 	background: #fff;
-	border-radius: 5px;	
-	padding: 20px;
+	border-radius: 0.25rem;	
+	padding: 1rem;
 	box-sizing: border-box;
 }
 
 form{
 	width: 100%;
 	display: flex;
-	gap: 20px;
+	gap: 1rem;
 	flex-direction: column;
 }
 
 form .input-fields{
 	display: flex;
-	gap: 50px;
+	gap: 2.5rem;
 }
 
 form .input-fields div{ 
@@ -58,10 +58,10 @@ form .input-fields div{
 form .input-fields input[type=text],
 form .input-fields select,
 form .input-fields textarea{
-	padding: 10px;
+	padding: 0.5rem;
 	box-sizing: border-box;
-	border-radius: 5px;
-	border: 1px solid #D3D3D3;
+	border-radius: 0.25rem;
+	border: 0.05rem solid #D3D3D3;
 }
 
 form .buttons{
@@ -77,9 +77,9 @@ textarea{
 input[type="color"] {
         width: 100%; 
 		height: 100%;
-        border: 1px solid #ccc; 
-        border-radius: 5px; 
-        padding: 5px; 
+        border: 0.05rem solid #ccc; 
+        border-radius: 0.25rem; 
+        padding: 0.25rem; 
         cursor: pointer; 
         background: #fff;
     }

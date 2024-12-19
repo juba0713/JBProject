@@ -11,4 +11,5 @@ public class CommonConstant {
 	
 	public static final String UPDATE_STATUS = "status";
 	public static final String UPDATE_ALL = "all";
+	public static final String UPDATE_DELETE = "delete";
 }
