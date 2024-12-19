@@ -23,7 +23,7 @@ public class QuestionEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
-	private int categoryId;
+	private int questionaireId;
 	
 	@Column(nullable=false)
 	private String question;
