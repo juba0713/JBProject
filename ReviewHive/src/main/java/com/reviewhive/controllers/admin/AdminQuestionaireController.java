@@ -58,20 +58,21 @@ public class AdminQuestionaireController {
 	}
 	
 
+	/**
+	 * Post Questionaire Add
+	 * @param model
+	 * @param webDto
+	 * @param result
+	 * @param ra
+	 * @return
+	 */
 	@PostMapping("/questionaire-add")
 	public String postQuestionaireAddScreen(
 			Model model,
 			@Valid @ModelAttribute QuestionaireDto webDto,
 			BindingResult result,
 			RedirectAttributes ra) {
-		
-		System.out.println(webDto.getQuestionaireCategoryId());
-		System.out.println(webDto.getQuestionaireAbbreviation());
-		System.out.println(webDto.getQuestionaireName());
-		System.out.println(webDto.getQuestionaireStatus());
-		System.out.println(webDto.getQuestionaireDescription());
-		System.out.println(webDto.getQuestionaireColor());
-		
+				
 		if(result.hasErrors()) {
 			
 			return "admin/questionaire-add";
@@ -87,7 +88,7 @@ public class AdminQuestionaireController {
 	}
 	
 	/**
-	 * Show Questionaire Add Screen
+	 * Show Questionaire Edit Screen
 	 * @return String
 	 */
 	@GetMapping("/questionaire-edit")
@@ -101,7 +102,7 @@ public class AdminQuestionaireController {
 	}
 	
 	/**
-	 * Post Questionaire Edit Screen
+	 * Post Questionaire Edit
 	 * @param webDto
 	 * @param ra
 	 * @param result
@@ -129,6 +130,12 @@ public class AdminQuestionaireController {
 		return "redirect:/admin/questionaire-list";
 	}
 	
+	/**
+	 * Questionaire Delete
+	 * @param webDto
+	 * @param ra
+	 * @return
+	 */
 	@PostMapping("/questionaire-delete")
 	public String postCategoryDeleteScreen(
 			@ModelAttribute QuestionaireDto webDto,
@@ -145,8 +152,15 @@ public class AdminQuestionaireController {
 		return "redirect:/admin/questionaire-list";
 	}
 	
-	@GetMapping("/questionaire/question")
-	public String showQuestionaireQuestionScreen() {
+	/**
+	 * Show Questionaire Questions Screen
+	 * @param webDto
+	 * @return
+	 */
+	@GetMapping("/questionaire/questions")
+	public String showQuestionaireQuestionScreen(@ModelAttribute QuestionaireDto webDto) {
+		
+		webDto.setQuestionaire(questionaireService.getQuestionaireById(webDto).getQuestionaire());
 		
 		return "admin/questionaire-question";
 	}
