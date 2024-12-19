@@ -35,6 +35,8 @@ public class CategoryDto {
 	
 	private List<CategoryDetailsEntity> categories;
 	
+	private List<CategoryEntity> categoriesSelection;
+	
 	private int page;
 	
 	private String updateType;

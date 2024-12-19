@@ -15,7 +15,7 @@ let initial = true;
 async function getData(page){
 	try {
 		//Fetch data from the given API
-        var response = await fetch("/admin/api/category/get-all	?page=" + page);
+        var response = await fetch("/admin/api/questionaire/get-all?page=" + page);
         
         if(!response.ok){
 			console.error("Error fetching category:", error);
@@ -27,15 +27,15 @@ async function getData(page){
 		console.log("Categories: ");
 		console.log(data);
 		
-		const categories = data.categories;
-		let totalPage = (categories && categories.length > 0) ? categories[0].totalPage : 1
+		const questionaires = data.questionaires;
+		let totalPage = (questionaires && questionaires.length > 0) ? questionaires[0].totalPage : 1
 		if(initial){
 			updateButtonStates(INITIAL_PAGE, totalPage);
 			updateSelectPage(totalPage);
 			initial = false;
 		}
 		
-		populateTable(categories);
+		populateTable(questionaires);
 		
 		return {
 			totalPage : totalPage
@@ -46,21 +46,19 @@ async function getData(page){
 	}
 }
 
-function populateTable(categories){
+function populateTable(questionaires){
 	
 	tableBody.innerHTML = '';
 	
-	if(categories.length != 0){
-		for(let category of categories){
-			const isChecked = category.isOpen ? 'checked' : '';
-			const categoryHTML = `<tr categoryId="${category.id}">
-									<td>${category.id}</td>
-									<td>${category.categoryName}</td>
-									<td class="description-td">
-										<div class="description">
-									        ${category.description}
-									    </div>
-									</td>
+	if(questionaires.length != 0){
+		for(let questionaire of questionaires){
+			const isChecked = questionaire.isOpen ? 'checked' : '';
+			const categoryHTML = `<tr questionaireId="${questionaire.id}">
+									<td>${questionaire.id}</td>
+									<td>${questionaire.categoryName}</td>
+									<td><span style="background: ${questionaire.hexColor}" class="abbreviation-color">${questionaire.abbreviation}</span></td>
+									<td>${questionaire.questionaireName}</td>
+									<td>${questionaire.questionTotal}</td>
 									<td>
 										<label class="switch">
 										  <input type="checkbox" ${isChecked} class="status-toggle">
@@ -68,15 +66,18 @@ function populateTable(categories){
 										</label>
 									</td>
 									<td>
-											<a class="action-btn edit-btn" href="/admin/category-edit?id=${category.id}">
-												<img src="/icons/view.svg">
-											</a>
-											<a class="action-btn edit-btn" href="/admin/category-edit?id=${category.id}">
-												<img src="/icons/edit.svg">
-											</a>
-											<button class="action-btn delete-btn" data-toggle="modal" data-target="#deleteModal">
-												<img src="/icons/delete.svg">
-											</button>
+										<a class="action-btn edit-btn" href="/admin/category-edit?id=${questionaire.id}">
+											<img src="/icons/view.svg">
+										</a>
+										<a class="action-btn edit-btn" href="/admin/questionaire-edit?id=${questionaire.id}">
+											<img src="/icons/edit.svg">
+										</a>
+										<button class="action-btn delete-btn" data-toggle="modal" data-target="#deleteModal">
+											<img src="/icons/delete.svg">
+										</button>
+										<a class="action-btn add-btn" href="/admin/questionaire/questions?id=${questionaire.id}">
+											<img src="/icons/add_question.svg">
+										</a>
 									</td>
 								</tr>		`;
 								
@@ -84,7 +85,7 @@ function populateTable(categories){
 		}
 	}else{
 		const categoryHTML = `<tr>
-									<td colspan="5">No Data</td>									
+									<td colspan="7">No Data</td>									
 								</tr>		`;
 								
 			tableBody.innerHTML += categoryHTML;
@@ -92,20 +93,20 @@ function populateTable(categories){
 	
 	document.querySelectorAll('.status-toggle').forEach(toggle => toggle.addEventListener('change', function(){
 		
-	    const categoryId = this.closest('tr').getAttribute('categoryId');
+	    const questionaireId = this.closest('tr').getAttribute('questionaireId');
 
 	    const status = this.checked; 
 	    
 	    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
 	    
-	    fetch("/admin/api/category/update-status", {
+	    fetch("/admin/api/questionaire/update-status", {
 	        method: 'POST',
 	        headers: {
 	            'Content-Type': 'application/x-www-form-urlencoded', 
 	            'X-CSRF-TOKEN': csrfToken 
 	        },
 	        body: new URLSearchParams({
-	            id: categoryId,
+	            id: questionaireId,
 	            status: status
 	        }),
 	        credentials: 'same-origin'
@@ -123,7 +124,7 @@ function populateTable(categories){
 	}));
 	
 	document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', function(){
-		const categoryId = this.closest('tr').getAttribute('categoryId');
+		const categoryId = this.closest('tr').getAttribute('questionaireId');
 		
 		document.querySelector("#hiddenId").setAttribute('value', categoryId);
 	}));

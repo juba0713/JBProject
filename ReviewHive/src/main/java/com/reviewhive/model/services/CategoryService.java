@@ -22,7 +22,7 @@ public interface CategoryService {
 	 * @param inDto
 	 * @return CategoryDto
 	 */
-	public CategoryDto getAllCategory(CategoryDto inDto);
+	public CategoryDto getAllCategoryByPage(CategoryDto inDto);
 	
 	/**
 	 * Update Category 
@@ -36,4 +36,11 @@ public interface CategoryService {
 	 * @return CategoryDto
 	 */
 	public CategoryDto getCategoryById(CategoryDto inDto);
+	
+	/**
+	 * Get All Category
+	 * @return CategoryDto
+	 */
+	public CategoryDto getAllCategory();
+	
 }

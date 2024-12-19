@@ -50,11 +50,11 @@ public class CategoryServiceImpl implements CategoryService{
 	 * @return CategoryDto
 	 */
 	@Override
-	public CategoryDto getAllCategory(CategoryDto inDto) {
+	public CategoryDto getAllCategoryByPage(CategoryDto inDto) {
 		
 		CategoryDto outDto = new CategoryDto();
 		
-		List<CategoryDetailsEntity> categories = categoryLogic.getAllCategory(inDto.getPage());
+		List<CategoryDetailsEntity> categories = categoryLogic.getAllCategoryByPage(inDto.getPage());
 		
 		outDto.setCategories(categories);
 		
@@ -112,6 +112,18 @@ public class CategoryServiceImpl implements CategoryService{
 		CategoryEntity category = categoryLogic.getCategoryById(inDto.getId());
 		
 		outDto.setCategory(category);
+		
+		return outDto;
+	}
+
+	@Override
+	public CategoryDto getAllCategory() {
+		
+		CategoryDto outDto = new CategoryDto();
+		
+		List<CategoryEntity> categoriesSelection = categoryLogic.getAllCategory();
+		
+		outDto.setCategoriesSelection(categoriesSelection);
 		
 		return outDto;
 	}
