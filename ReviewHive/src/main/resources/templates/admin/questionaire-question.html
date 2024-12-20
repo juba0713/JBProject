@@ -40,6 +40,9 @@
 			<div class="content-body">
 				
 				<div class="content-body-sidebar">
+					<div class="prompt-total-question">
+						<span>Total Question:</span><span>0</span>
+					</div>
 					<div class="prompt-question-count">
 						<span>How many question?</span>
 						<input type="number" value="1"/>
@@ -52,13 +55,18 @@
 							<option>Identification</option>
 						</select>
 					</div>
-				</div>
-				<div class="content-body-question-list">
-					<div>Questions</div>
+					<div>
+						<button class="action-btn">ADD QUESTIONS</button>
+						<button class="action-btn cancel-btn">RESET</button>
+						<button class="action-btn save-btn">SAVE</button>
+					</div>
 				</div>
 				<div class="content-body-question">
 					
-						<div class="question-container">
+						<div class="question-container" questionType="1">
+							<div class="question-settings">
+								<img th:src="@{/}"/>
+							</div>
 							<div class="question">
 								<div>Question 1 - Multiple Choice</div>
 								<textarea></textarea>
@@ -67,22 +75,22 @@
 							<div class="answers">
 								<div>
 									<input type="radio" />
-									<textarea></textarea>
+									<input type="text"/>
 									<img class="remove-btn" th:src="@{/icons/warning.svg}"/>
 								</div>
 								<div>
 									<input type="radio" />
-									<textarea></textarea>
+									<input type="text"/>
 									<img class="remove-btn" th:src="@{/icons/warning.svg}"/>
 								</div>
 								<div>
 									<input type="radio" />
-									<textarea></textarea>
+									<input type="text"/>
 									<img class="remove-btn" th:src="@{/icons/warning.svg}"/>
 								</div>
 								<div>
 									<input type="radio" />
-									<textarea></textarea>
+									<input type="text"/>
 									<img class="remove-btn" th:src="@{/icons/warning.svg}"/>
 								</div>
 								<button class="action-btn">Add Choice</button>

@@ -97,6 +97,10 @@ main{
 	color: #000;
 }
 
+.save-btn{
+	background: #50C878;
+}
+
 *:disabled{
 	cursor: not-allowed;
 }
