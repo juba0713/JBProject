@@ -6,6 +6,7 @@ import com.reviewhive.common.constant.MessageConstant;
 import com.reviewhive.model.dao.entity.CategoryEntity;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
+import com.reviewhive.model.objects.QuestionObj;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -45,4 +46,6 @@ public class QuestionaireDto {
 	private int page;
 	
 	private String updateType;
+	
+	private List<QuestionObj> questions;
 }

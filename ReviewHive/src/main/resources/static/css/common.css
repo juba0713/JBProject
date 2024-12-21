@@ -45,7 +45,7 @@ main{
 	height: 100%;
 	display: flex;
 	position: relative;
-	overflow: auto;
+	overflow: hidden;
 	margin: 0 !important;
 	padding: 0;
 	max-width: 100%;
@@ -57,7 +57,7 @@ main{
 	width: 100%;
 	height: 100%;
 	font-size: 0.8rem;
-	overflow: auto;
+	overflow: hidden;
 }
 
 .action-btn{
@@ -224,6 +224,9 @@ input:checked + .slider:before {
     pointer-events: none;
 }
 
+/*
+Modal CSS
+*/
 .modal form{
 	display: flex;
 	justify-content: center;
@@ -260,4 +263,24 @@ input:checked + .slider:before {
 .modal form img{
 	width: 5rem;
 	height: 5rem;
+}
+
+/*
+Scrollbar CSS
+*/
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

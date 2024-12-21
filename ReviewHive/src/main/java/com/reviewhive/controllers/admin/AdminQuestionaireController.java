@@ -14,6 +14,8 @@ import com.reviewhive.common.constant.CommonConstant;
 import com.reviewhive.common.constant.MessageConstant;
 import com.reviewhive.model.dto.CategoryDto;
 import com.reviewhive.model.dto.QuestionaireDto;
+import com.reviewhive.model.objects.AnswerObj;
+import com.reviewhive.model.objects.QuestionObj;
 import com.reviewhive.model.services.CategoryService;
 import com.reviewhive.model.services.QuestionaireService;
 
@@ -163,5 +165,23 @@ public class AdminQuestionaireController {
 		webDto.setQuestionaire(questionaireService.getQuestionaireById(webDto).getQuestionaire());
 		
 		return "admin/questionaire-question";
+	}
+	 
+	@PostMapping("test")
+	public String Test(QuestionaireDto webDto) {
+	
+		for(QuestionObj question : webDto.getQuestions()) {
+			System.out.println(question.getQuestionNo());
+			System.out.println(question.getQuestionType());
+			System.out.println(question.getQuestion());
+			System.out.println(question.getQuestionImage());
+			
+			for(AnswerObj answer : question.getAnswers()) {
+				System.out.println(answer.getAnswer());
+			}
+			System.out.println("Answer Count" + question.getAnswers().size());
+		}
+		
+		return "redirect:/admin/questionaire-list";
 	}
 }
