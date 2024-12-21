@@ -38,95 +38,47 @@
 				</a>
 			</div>	
 			<div class="content-body">
-				
+				<form th:action="@{/admin/test}" method="POST" id="form" enctype="multipart/form-data">
 				<div class="content-body-sidebar">
-					<div class="prompt-total-question">
-						<span>Total Question:</span><span>0</span>
-					</div>
-					<div class="prompt-question-count">
-						<span>How many question?</span>
-						<input type="number" value="1"/>
-					</div>
-					<div class="prompt-question-type">
-						<span>Question Type?</span>
-						<select>
-							<option>Multiple Choice</option>
-							<option>True / False</option>
-							<option>Identification</option>
-						</select>
+					<div>
+						<div>
+							<span>How many question?</span>
+							<input type="number" value="1" class="prompt-question-count"/>
+						</div>
+						<div>
+							<span>Question Type?</span>
+							<select class="prompt-question-type">
+								<option value="1">Multiple Choice</option>
+								<option value="2">True / False</option>
+								<option value="3">Identification</option>
+							</select>
+						</div>
+						<div>
+							<button class="action-btn add-question-btn" type="button">ADD QUESTIONS</button>
+						</div>
 					</div>
 					<div>
-						<button class="action-btn">ADD QUESTIONS</button>
-						<button class="action-btn cancel-btn">RESET</button>
-						<button class="action-btn save-btn">SAVE</button>
+						<button class="action-btn cancel-btn" type="button">RESET</button>
+						<button class="action-btn save-btn" type="submit">SAVE</button>
 					</div>
+				</div>
+				<div>
+					<span>Total Question:</span>
+					<span class="total-question">0</span>
 				</div>
 				<div class="content-body-question">
 					
-						<div class="question-container" questionType="1">
-							<div class="question-settings">
-								<img th:src="@{/}"/>
-							</div>
-							<div class="question">
-								<div>Question 1 - Multiple Choice</div>
-								<textarea></textarea>
-								<input type="file" >
-							</div>
-							<div class="answers">
-								<div>
-									<input type="radio" />
-									<input type="text"/>
-									<img class="remove-btn" th:src="@{/icons/warning.svg}"/>
-								</div>
-								<div>
-									<input type="radio" />
-									<input type="text"/>
-									<img class="remove-btn" th:src="@{/icons/warning.svg}"/>
-								</div>
-								<div>
-									<input type="radio" />
-									<input type="text"/>
-									<img class="remove-btn" th:src="@{/icons/warning.svg}"/>
-								</div>
-								<div>
-									<input type="radio" />
-									<input type="text"/>
-									<img class="remove-btn" th:src="@{/icons/warning.svg}"/>
-								</div>
-								<button class="action-btn">Add Choice</button>
-							</div>
-						</div>
-						<div class="question-container">
-							<div class="question">
-								<div>Question 2 - True / False</div>
-								<textarea></textarea>
-								<input type="file" >
-							</div>
-							<div class="answers">
-								<div>
-									<input type="radio" />
-									<div>True</div>
-								</div>
-								<div>
-									<input type="radio" />
-									<div>False</div>
-								</div>
-							</div>
-						</div>
-						<div class="question-container">
-							<div class="question">
-								<div>Question 3 - Identification</div>
-								<textarea></textarea>
-								<input type="file" >
-							</div>
-							<div class="answers">
-								<textarea></textarea>
-							</div>
-						</div>
-					</div>		
+					<!--Drop Zone of Questions -->
+				</div>
+				</form>
 			</div>
-			</div>
+			
+				
 		</div>
 	</main>
+	<div class="display-image">
+		<img th:src="@{/images/no-image.png}" />
+	</div>
+	<script th:inline="javascript" th:src="@{/js/questionaire-question.js}"></script>
 </body>
 </html>
