@@ -25,7 +25,7 @@ public class QuestionEntity {
 
 	private int questionaireId;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, columnDefinition="TEXT")
 	private String question;
 	
 	@Column(nullable=false)
@@ -35,11 +35,13 @@ public class QuestionEntity {
 	private Boolean isOpen;
 	
 	@Column(nullable = false)
-	private Timestamp createdDate;
+	private Timestamp createdDate; 
 	
 	@Column(nullable = false)
 	private Timestamp updatedDate;
 	
 	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean deleteFlg;
+	
+	private String questionImage;
 }

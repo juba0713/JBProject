@@ -9,8 +9,6 @@ import lombok.Data;
 @Data
 public class QuestionObj {
 	
-	private String questionNo;
-	
 	private String questionType;
 	
 	private String question;
@@ -18,4 +16,8 @@ public class QuestionObj {
 	private MultipartFile questionImage;
 	
 	private List<AnswerObj> answers;
+	
+	public boolean hasNullField() {
+        return questionType == null || answers == null;
+    }
 }

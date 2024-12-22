@@ -1,5 +1,6 @@
 package com.reviewhive.controllers.admin;
 
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.reviewhive.common.constant.CommonConstant;
 import com.reviewhive.common.constant.MessageConstant;
-import com.reviewhive.model.dto.CategoryDto;
 import com.reviewhive.model.dto.QuestionaireDto;
 import com.reviewhive.model.objects.AnswerObj;
 import com.reviewhive.model.objects.QuestionObj;
@@ -164,23 +164,41 @@ public class AdminQuestionaireController {
 		
 		webDto.setQuestionaire(questionaireService.getQuestionaireById(webDto).getQuestionaire());
 		
+		webDto.setRetrievedQuestions(questionaireService.getQuestionaireQuestions(webDto).getRetrievedQuestions());
+		
+		System.out.println(webDto.getId());
+		
 		return "admin/questionaire-question";
 	}
 	 
 	@PostMapping("test")
-	public String Test(QuestionaireDto webDto) {
+	public String Test(QuestionaireDto webDto) throws IOException {
+		 
+		
 	
-		for(QuestionObj question : webDto.getQuestions()) {
-			System.out.println(question.getQuestionNo());
-			System.out.println(question.getQuestionType());
-			System.out.println(question.getQuestion());
-			System.out.println(question.getQuestionImage());
-			
-			for(AnswerObj answer : question.getAnswers()) {
-				System.out.println(answer.getAnswer());
-			}
-			System.out.println("Answer Count" + question.getAnswers().size());
+//		for(QuestionObj question : webDto.getQuestions()) {
+//			System.out.println("Question Type: " + question.getQuestionType());
+//			System.out.println("Question: " + question.getQuestion());
+//			//System.out.println("Question No: " + question.getQuestionImage());
+//			
+//			for(AnswerObj answer : question.getAnswers()) {
+//				System.out.println("Answer: " + answer.getAnswer());
+//			}
+//			System.out.println("Answer Count" + question.getAnswers().size());
+//			System.out.println(question.getQuestionImage().getOriginalFilename());
+//			System.out.println("----------------------------------------------------------");
+//		}
+		
+		
+		
+		if(webDto.getQuestions()==null) {
+			return "redirect:/admin/questionaire-list";
 		}
+		
+		webDto.getQuestions().removeIf(QuestionObj::hasNullField);
+		webDto.getQuestions().forEach(question -> question.getAnswers().removeIf(AnswerObj::hasNullField));
+		
+		questionaireService.saveQuestionaireQuestion(webDto);
 		
 		return "redirect:/admin/questionaire-list";
 	}

@@ -25,7 +25,9 @@ public class AnswerEntity {
 
 	private int questionId;
 	
-	@Column(nullable=false)
+	private int questionaireId; 
+	
+	@Column(nullable=false, columnDefinition="TEXT")
 	private String answer;
 	
 	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
@@ -42,4 +44,6 @@ public class AnswerEntity {
 	
 	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean deleteFlg;
+	
+	private String answerImage;
 }

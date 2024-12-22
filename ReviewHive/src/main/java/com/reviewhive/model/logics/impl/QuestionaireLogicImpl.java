@@ -7,7 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reviewhive.common.util.ApplicationPropertiesRead;
+import com.reviewhive.model.dao.AnswerDao;
+import com.reviewhive.model.dao.QuestionDao;
 import com.reviewhive.model.dao.QuestionaireDao;
+import com.reviewhive.model.dao.entity.AnswerEntity;
+import com.reviewhive.model.dao.entity.QuestionDetailsEntity;
+import com.reviewhive.model.dao.entity.QuestionEntity;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
 import com.reviewhive.model.logics.QuestionaireLogic;
@@ -21,6 +26,12 @@ public class QuestionaireLogicImpl implements QuestionaireLogic{
 	
 	@Autowired
 	private QuestionaireDao questionaireDao;
+	
+	@Autowired
+	private QuestionDao questionDao;
+	
+	@Autowired
+	private AnswerDao answerDao;
 
 	/**
 	 * Save Questionaire
@@ -106,6 +117,74 @@ public class QuestionaireLogicImpl implements QuestionaireLogic{
 	public void updateQuestionaireDelete(int id) {
 		
 		questionaireDao.updateQuestionaireDelete(id);
+	}
+
+	/**
+	 * Save All Questionaire Questions
+	 * @param entities
+	 */
+	@Override
+	public void saveAllQuestionaireQuestion(List<QuestionEntity> entities) {
+		
+		questionDao.saveAll(entities);
+		
+		//return entities;
+	}
+
+	/**
+	 * Save Questionaire Question
+	 * @param entity
+	 */
+	@Override
+	public int saveQuestionaireQuestion(QuestionEntity entity) {
+		
+		questionDao.save(entity);
+		
+		return entity.getId();
+		
+	}
+
+	/**
+	 * Save Questionaire Question Answers
+	 * @param entites
+	 */
+	@Override
+	public void saveAllQuestionaireQuestionAnswers(List<AnswerEntity> entities) {
+		
+		answerDao.saveAll(entities);
+	}
+
+	/**
+	 * Save Questionaire Question Answer
+	 * @param entity
+	 */
+	@Override
+	public void saveQuestionaireQuestionAnswer(AnswerEntity entity) {
+		
+		answerDao.save(entity);
+	}
+
+	/**
+	 * Get Questionaire Questions & Answers by Questionaire Id
+	 * @param questionaireId
+	 * @return
+	 */
+	@Override
+	public List<QuestionDetailsEntity> getQuestionaireQuestions(int questionaireId) {
+		
+		return questionDao.getQuestionDetailsByQuestionaireId(questionaireId);
+	}
+
+	@Override
+	public void deleteQuestionsByQuestionaireId(int questionaireId) {
+		
+		questionDao.deleteQuestionByQuestionaireId(questionaireId);
+	}
+
+	@Override
+	public void deleteAnswersByQuestionaireId(int questionaireId) {
+		
+		answerDao.deleteAnswerByQuestionaireId(questionaireId);
 	}
 
 }
