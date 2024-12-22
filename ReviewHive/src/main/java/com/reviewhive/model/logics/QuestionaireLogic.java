@@ -3,9 +3,11 @@ package com.reviewhive.model.logics;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import com.reviewhive.model.dao.entity.AnswerEntity;
+import com.reviewhive.model.dao.entity.QuestionDetailsEntity;
+import com.reviewhive.model.dao.entity.QuestionEntity;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
 
@@ -68,4 +70,40 @@ public interface QuestionaireLogic {
 	 * @param id
 	 */
 	public void updateQuestionaireDelete(int id);
+	
+	/**
+	 * Save All Questionaire Questions
+	 * @param entites
+	 */
+	public void saveAllQuestionaireQuestion(List<QuestionEntity> entites);
+	
+	/**
+	 * Save Questionaire Question
+	 * @param entity
+	 */
+	public int saveQuestionaireQuestion(QuestionEntity entity);
+	
+	/**
+	 * Save All Questionaire Question Answers
+	 * @param entites
+	 */
+	public void saveAllQuestionaireQuestionAnswers(List<AnswerEntity> entites);
+	
+	/**
+	 * Save Questionaire Question Answer
+	 * @param entity
+	 */
+	public void saveQuestionaireQuestionAnswer(AnswerEntity entity);
+	
+	/**
+	 * Get Questionaire Questions & Answers by Questionaire Id
+	 * @param questionaireId
+	 * @return
+	 */
+	public List<QuestionDetailsEntity> getQuestionaireQuestions(int questionaireId);
+	
+	public void deleteQuestionsByQuestionaireId(int questionaireId);
+	public void deleteAnswersByQuestionaireId(int questionaireId);
+	
+	
 }

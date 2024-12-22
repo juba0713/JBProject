@@ -1,26 +1,4 @@
 
-class Question{
-	
-	constructor(questionNo,
-		questionType,
-		question,
-		questionImage,
-		answer,
-	) {
-    this.questionNo = questionNo;
-    this.questionType = questionType;
-    this.question = question;
-    this.questionImage = questionImage;
-    this.answer = answer;
-  }
-}
-
-class Answer{
-	constructor(answer){
-		this.answer = answer;
-	}
-}
-
 var questionList = [];
 
 const contentBodyQuestion = document.querySelector('.content-body-question');
@@ -37,15 +15,66 @@ const form = document.querySelector('#form');
 
 let currentTotalQuestion = 1;
 
+if(webDto.retrievedQuestions.length != 0){
+	let questionCount = 1;
+	for(let question of webDto.retrievedQuestions){
+		
+		let container = createQuestionContainer(questionCount, question.questionType);
+		
+		let answersContainer = container.querySelector('.answers');
+		
+		container.querySelector('textarea').textContent = question.question;
+		
+		if(question.questionImage != null && question.questionImage != ""){
+			container.querySelector('.question-uploaded-image').src = `/view/image/${question.id}/${question.questionImage}`;
+		}
+				
+		if(question.questionType == MULTIPLE_CHOICE){
+			answersContainer.innerHTML = '';
+			if(question.answers != 0){
+				let answerCount = 1;
+				for(let answer of question.answers){
+					console.log("AW");
+					let answerContainer = createOption(questionCount, answerCount, answer.isCorrect, answer.answer);
+					answersContainer.appendChild(answerContainer);
+					answerCount++;	
+				}	
+				container.setAttribute('answerCount', answerCount-1);
+			}
+		}
+		
+		if(question.questionType == TRUE_FALSE){
+			if(question.answers[0].isCorrect){
+				answersContainer.querySelectorAll('input[type="hidden"]')[0].value = true;
+				answersContainer.querySelectorAll('img')[0].src = '/icons/circle-check.svg';
+			}else if(question.answers[1].isCorrect){
+				answersContainer.querySelectorAll('input[type="hidden"]')[1].value = true;
+				answersContainer.querySelectorAll('img')[1].src = '/icons/circle-check.svg';
+			}
+			
+		}
+		
+		if(question.questionType == IDENTIFICATION){
+			answersContainer.querySelectorAll('textarea')[1].textContent = question.answers[0].answer;
+		}
+		
+		contentBodyQuestion.appendChild(container);
+		
+		questionCount++;
+		
+		currentTotalQuestion = questionCount;
+	}
+	totalQuestion.innerHTML = questionCount-1;
+}else{
+	console.log("NO QUESTIONS");
+}
+
 
 document.querySelector('.add-question-btn').addEventListener('click', function(){
 		
 	const questionCount = promptQuestionCount.value;
 	const questionType = promptQuestionType.value;
 	
-	console.log("Question Type: " + questionType);
-	console.log("Question Count: " + questionCount);
-		
 	totalQuestion.innerHTML = Number(totalQuestion.innerHTML) + Number(questionCount);
 
 	for(let count = 1; count <= Number(questionCount); count++){
@@ -53,41 +82,10 @@ document.querySelector('.add-question-btn').addEventListener('click', function()
 		let container = createQuestionContainer(currentTotalQuestion, questionType);
 		
 		contentBodyQuestion.appendChild(container);
-						
-		generateQuestionHidden(
-			currentTotalQuestion,
-			questionType,
-			
-		);
 		
 		currentTotalQuestion++;
 	}
 });
-
-function generateQuestionHidden(questionNo,
-		questionType
-	){
-
-    const hiddenQuestionNo = document.createElement('input');
-    hiddenQuestionNo.type = 'hidden';
-    hiddenQuestionNo.name = `questions[${questionNo-1}].questionNo`;
-    hiddenQuestionNo.value = questionNo;
-
-    const hiddenQuestionType = document.createElement('input');
-    hiddenQuestionType.type = 'hidden';
-    hiddenQuestionType.name = `questions[${questionNo-1}].questionType`;
-    hiddenQuestionType.value = questionType;
-      
-    // Append the inputs to the form
-    form.appendChild(hiddenQuestionNo);
-    form.appendChild(hiddenQuestionType);
-}
-
-document.querySelector('.save-btn').addEventListener('click', function(){
-	
-	  form.submit(); 
-});
-
 
 function createQuestionContainer(questionNo, questionType){
 	
@@ -98,41 +96,22 @@ function createQuestionContainer(questionNo, questionType){
 	switch(questionType){
 		case MULTIPLE_CHOICE: // Multiple Choice
 			container.setAttribute('questionType', questionType);
-			container.setAttribute('answerCount', 4);
+			container.setAttribute('answerCount', 1);
 			container.innerHTML = `<div class="question-image">
 						<img src="/images/no-image.png" class="question-uploaded-image">
 					</div>
 					<div class="question-content">
 						<div class="question">
-							<div class="question-number">Question ${questionNo} - Multiple Choice</div>
+							<div>Question</div>
 							<textarea name="questions[${questionNo-1}].question"></textarea>
-							<input type="file" name="questions[${questionNo-1}].questionImage" class="question-input-image">
+							<input type="file" name="questions[${questionNo-1}].questionImage" class="question-input-image" accept=".png, .jpg, .jpeg">
 						</div>
 						<div class="answers answers-${questionNo}">
-							<div>
-								<input type="radio" disabled/>
-								<input type="text" name="questions[${questionNo-1}].answers[0].answer" value="Option"/>
-								<img class="remove-btn remove-option" src="/icons/warning.svg"/>
-							</div>
-							<div>
-								<input type="radio" disabled/>
-								<input type="text" name="questions[${questionNo-1}].answers[1].answer" value="Option"/>
-								<img class="remove-btn remove-option" src="/icons/warning.svg"/>
-							</div>
-							<div>
-								<input type="radio" disabled/>
-								<input type="text" name="questions[${questionNo-1}].answers[2].answer" value="Option"/>
-								<img class="remove-btn remove-option" src="/icons/warning.svg"/>
-							</div>
-							<div>
-								<input type="radio" disabled/>
-								<input type="text" name="questions[${questionNo-1}].answers[3].answer" value="Option"/>
-								<img class="remove-btn remove-option" src="/icons/warning.svg"/>
-							</div>
+												
 						</div>
 					</div>							
 					<div class="question-settings">
-						<img src="/icons/x-square.svg"/>
+						<img src="/icons/x-square.svg" class="remove-question-btn"/>
 						<img src="/icons/add-square.svg" class="add-option" />
 					</div>`;				
 			break;
@@ -143,23 +122,29 @@ function createQuestionContainer(questionNo, questionType){
 									</div>
 									<div class="question-content">
 										<div class="question">
-											<div class="question-number">Question ${questionNo} - True / False</div>
+											<div>Question</div>
 											<textarea name="questions[${questionNo-1}].question"></textarea>
-											<input type="file" name="questions[${questionNo-1}].questionImage" class="question-input-image">
+											<input type="file" name="questions[${questionNo-1}].questionImage" class="question-input-image" accept=".png, .jpg, .jpeg">
 										</div>
 										<div class="answers">
 											<div>
 												<input type="radio" disabled/>
 												<div>True</div>
+												<img class="correct-btn" src="/icons/circle-check-gray.svg" />
+												<input type="hidden" name="questions[${questionNo-1}].answers[0].isCorrect" value="false" />
+												<input type="hidden" name="questions[${questionNo-1}].answers[0].answer" value="True" />
 											</div>
 											<div>
 												<input type="radio" disabled/>
 												<div>False</div>
+												<img class="correct-btn" src="/icons/circle-check-gray.svg" />
+												<input type="hidden" name="questions[${questionNo-1}].answers[1].isCorrect" value="false" />
+												<input type="hidden" name="questions[${questionNo-1}].answers[1].answer" value="False" />
 											</div>
 										</div>
 									</div>							
 									<div class="question-settings">
-										<img src="/icons/x-square.svg"/>
+										<img src="/icons/x-square.svg" class="remove-question-btn"/>
 									</div>`;
 			
 			break;
@@ -169,16 +154,17 @@ function createQuestionContainer(questionNo, questionType){
 									</div>
 									<div class="question-content">
 										<div class="question">
-											<div class="question-number">Question ${questionNo} - Identification</div>
+											<div>Question</div>
 											<textarea name="questions[${questionNo-1}].question"></textarea>
-											<input type="file" name="questions[${questionNo-1}].questionImage" class="question-input-image">
+											<input type="file" name="questions[${questionNo-1}].questionImage" class="question-input-image" accept=".png, .jpg, .jpeg">
 										</div>
 										<div class="answers">
 											<textarea disabled></textarea>
+											<textarea placeholder="Enter correct answer" name="questions[${questionNo-1}].answers[0].answer"></textarea>
 										</div>
 									</div>							
 									<div class="question-settings">
-										<img src="/icons/x-square.svg"/>								
+										<img src="/icons/x-square.svg" class="remove-question-btn"/>								
 									</div>`;
 			break;
 		default:
@@ -186,6 +172,24 @@ function createQuestionContainer(questionNo, questionType){
 		    errorContainer.textContent = 'Error';
 		    container = errorContainer;
 	}
+	
+	container.querySelector('.answers').appendChild(createOption(questionNo, 1));
+	
+	const hiddenQuestionType = document.createElement('input');
+    hiddenQuestionType.type = 'hidden';
+    hiddenQuestionType.name = `questions[${questionNo-1}].questionType`;
+    hiddenQuestionType.value = questionType;
+    
+    /*
+    <div>
+								<input type="radio" disabled/>
+								<input type="text" name="questions[${questionNo-1}].answers[0].answer" value="Option"/>
+								<img class="correct-btn not-delete" src="/icons/circle-check-gray.svg" />
+								<input type="hidden" name="questions[${questionNo-1}].answers[0].isCorrect" value="false" />
+							</div>	
+    */
+    
+    container.appendChild(hiddenQuestionType);
 	
 	const fileInputs = container.querySelectorAll('input[type="file"]');
 	
@@ -236,19 +240,86 @@ function createQuestionContainer(questionNo, questionType){
 			const answers = document.querySelector(`.answers-${questionNo}`);
 			const questionContainer = answers.closest('.question-container');
 			const answerCount = questionContainer.getAttribute('answercount');
-			
-			let answerContainer = document.createElement('div');
-			
-			answerContainer.innerHTML = `
-							<input type="radio" disabled/>
-							<input type="text" name="questions[${questionNo-1}].answers[${Number(answerCount)}].answer" value="Option"/>
-							<img class="remove-btn" src="/icons/warning.svg"/>`;
-						
-			answers.appendChild(answerContainer);
+								
+			answers.appendChild(createOption(questionNo, Number(answerCount)+1));
 			
 			questionContainer.setAttribute('answercount', Number(answerCount)+1);
 		});
 	}
+	
+	container.querySelector('.remove-question-btn').addEventListener('click', function(){
+		this.closest('.question-container').remove();
+	});
+	
+	//Add Event Listener to the Check Buttons
+	container.querySelectorAll('.correct-btn').forEach(btn => btn.addEventListener('click', function(){
+		this.classList.toggle('correct');
+		
+		const parentElement = this.parentElement;
+		
+		let hiddenCorrectValue = parentElement.querySelector('input[type="hidden"]');
+		
+		if(this.classList.contains('correct')){
+			this.src = '/icons/circle-check.svg';
+			hiddenCorrectValue.value = true;
+		}else{
+			this.src = '/icons/circle-check-gray.svg';
+			hiddenCorrectValue.value = false;
+		}
+				
+	}));
 		
 	return container;
+}
+
+function createOption(questionNo, answerNo, isCorrect=false, answer='Option'){
+	let answerContainer = document.createElement('div');
+	
+	if(isCorrect){
+		answerContainer.innerHTML = `
+					<input type="radio" disabled/>
+					<input type="text" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answer" value="${answer}"/>
+					<img class="correct-btn" src="/icons/circle-check.svg" />
+					<input type="hidden" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].isCorrect" value="true"/>`;
+	}else{
+		answerContainer.innerHTML = `
+					<input type="radio" disabled/>
+					<input type="text" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answer" value="${answer}"/>
+					<img class="correct-btn" src="/icons/circle-check-gray.svg" />
+					<input type="hidden" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].isCorrect" value="false"/>`;
+	}
+	
+	if(answerNo > 1){
+		let remove = document.createElement('img');
+		remove.classList.add('remove-btn');
+		remove.src = '/icons/warning.svg';
+		answerContainer.appendChild(remove);	
+	}else{
+		answerContainer.querySelector('.correct-btn').classList.add('not-delete');
+	}
+	
+	//Add Event Listener to the Check Buttons
+	answerContainer.querySelectorAll('.correct-btn').forEach(btn => btn.addEventListener('click', function(){
+		this.classList.toggle('correct');
+		
+		const parentElement = this.parentElement;
+		
+		let hiddenCorrectValue = parentElement.querySelector('input[type="hidden"]');
+		
+		if(this.classList.contains('correct')){
+			this.src = '/icons/circle-check.svg';
+			hiddenCorrectValue.value = true;
+		}else{
+			this.src = '/icons/circle-check-gray.svg';
+			hiddenCorrectValue.value = false;
+		}
+				
+	}));
+	
+	answerContainer.querySelectorAll('.remove-btn').forEach(btn => btn.addEventListener('click', function(){
+		this.parentElement.remove();
+		console.log(this);
+	}));
+			
+	return answerContainer;
 }

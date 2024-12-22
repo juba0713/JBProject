@@ -1,5 +1,7 @@
 package com.reviewhive.model.services;
 
+import java.io.IOException;
+
 import org.springframework.stereotype.Service;
 
 import com.reviewhive.model.dto.QuestionaireDto;
@@ -36,4 +38,17 @@ public interface QuestionaireService {
 	 * @param inDto
 	 */
 	public void updateQuestionaire(QuestionaireDto inDto);
+	
+	/**
+	 * To save the questionaire question
+	 * @param inDto
+	 */
+	public void saveQuestionaireQuestion(QuestionaireDto inDto) throws IOException ;
+	
+	/**
+	 * Get Questionaire Questions & Answers
+	 * @param inDto
+	 * @return
+	 */
+	public QuestionaireDto getQuestionaireQuestions(QuestionaireDto inDto);
 }

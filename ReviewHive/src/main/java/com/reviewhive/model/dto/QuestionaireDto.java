@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.reviewhive.common.constant.MessageConstant;
 import com.reviewhive.model.dao.entity.CategoryEntity;
+import com.reviewhive.model.dao.entity.QuestionDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
 import com.reviewhive.model.objects.QuestionObj;
@@ -48,4 +49,6 @@ public class QuestionaireDto {
 	private String updateType;
 	
 	private List<QuestionObj> questions;
+	
+	private List<QuestionDetailsEntity> retrievedQuestions;
 }
