@@ -129,14 +129,12 @@ public interface QuestionDao extends JpaRepository<QuestionEntity, Integer>{
 	public void deleteQuestionById(int questionId);
 	
 	public static final String UPDATE_QUESTION_BY_ID = "UPDATE m_question "
-			+ "SET question = :question, "
-			+ "question_image = :questionImage "
+			+ "SET question = :question "
 			+ "WHERE id = :questionId ";
 	
 	@Modifying
 	@Query(value=UPDATE_QUESTION_BY_ID, nativeQuery=true)
 	public void updateQuestionById(@Param("question") String question,
-			@Param("questionImage") String questionImage,
 			@Param("questionId") int questionId);
 	
 	public static final String UPDATE_QUESTION_IMAGE_BY_ID = "UPDATE m_question "
