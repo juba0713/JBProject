@@ -104,6 +104,12 @@ public interface QuestionaireLogic {
 	
 	public void deleteQuestionsByQuestionaireId(int questionaireId);
 	public void deleteAnswersByQuestionaireId(int questionaireId);
+	public void deleteQuestionbyId(int questionId);
+	public void deleteAnswersByQuestionId(int questionId);
+	public void deleteAnswerById(int answerId);
+	
+	public void updateQuestionById(String question, String questionImage, int questionId);
+	public void updateAnswerById(String answer, Boolean isCorrect, int answerId);
 	
 	
 }

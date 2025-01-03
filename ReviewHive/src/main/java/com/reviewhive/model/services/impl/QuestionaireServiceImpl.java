@@ -139,21 +139,36 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 	 */
 	@Override
 	public void saveQuestionaireQuestion(QuestionaireDto inDto) throws IOException {
-		
-		//List<QuestionEntity> questions = new ArrayList<>();
-		
-		Path uploadPath = Paths.get(ApplicationPropertiesRead.getProperty("question.image.path"));
-
-		if (!Files.exists(uploadPath)) {
-			Files.createDirectories(uploadPath);
-		}
-		
+				
 		if(inDto.getQuestions().size() != 0) {
-			
-			questionaireLogic.deleteQuestionsByQuestionaireId(inDto.getId());
-			questionaireLogic.deleteAnswersByQuestionaireId(inDto.getId());
-			
+					
 			for(QuestionObj questionObj : inDto.getQuestions()) {
+				
+				//If deleted from the questions but already in the database
+				if(questionObj.getHasDeleted() && questionObj.getQuestionId() != 0) {
+					
+					questionaireLogic.deleteQuestionbyId(questionObj.getQuestionId());
+					questionaireLogic.deleteAnswersByQuestionId(questionObj.getQuestionId());
+					
+					continue;
+				}
+				
+				//If already in the database and is not modified or deleted from the questions but is not in the database
+				if(questionObj.getQuestionId() != 0 && !questionObj.getHasModified() || questionObj.getHasDeleted()) {
+					continue;
+				} 
+
+				//If modified and already in the database
+				if(questionObj.getHasModified() && questionObj.getQuestionId() != 0) {
+					
+					questionaireLogic.updateQuestionById(questionObj.getQuestion(), 
+							questionObj.getQuestionImage().getOriginalFilename(), 
+							questionObj.getQuestionId());
+					
+					saveAnswers(questionObj.getAnswers(), inDto.getId(), questionObj.getQuestionId());
+					
+					continue;
+				}
 				
 				QuestionEntity question = new QuestionEntity();
 				question.setQuestionaireId(inDto.getId());
@@ -167,96 +182,85 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 				
 				int questionId = questionaireLogic.saveQuestionaireQuestion(question);
 				
-				MultipartFile questionImage = questionObj.getQuestionImage();
-
-		        if (questionImage != null && !questionImage.isEmpty()) {
-		   
-		            Path questionFolderPath = uploadPath.resolve(String.valueOf(questionId));
-
-		            // Recreate the folder
-		            Files.createDirectories(questionFolderPath);
-		            
-		            String originalFilename = questionImage.getOriginalFilename();
-		            String extension = "";
-		            if (originalFilename != null && originalFilename.contains(".")) {
-		                extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-		            }
-
-		            // Define the file path within the subfolder
-		            Path filePath = questionFolderPath.resolve(originalFilename);
-
-		            // Save the image
-		            Files.copy(questionImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-		        }
-				
-				if(questionObj.getQuestionType().equals(CommonConstant.MULTIPLE_CHOICE)) {
-					
-					List<AnswerEntity> answers = new ArrayList<>();
-					
-					if(questionObj.getAnswers() != null && questionObj.getAnswers().size() != 0) {
-						
-						for(AnswerObj answerObj : questionObj.getAnswers()) {
-							
-							AnswerEntity answer = new AnswerEntity();
-							answer.setQuestionId(questionId);
-							answer.setQuestionaireId(inDto.getId());
-							answer.setAnswer(answerObj.getAnswer());
-							answer.setIsCorrect(answerObj.getIsCorrect());
-							answer.setIsOpen(true);							
-							answer.setCreatedDate(DateFormatUtil.currentDate());
-							answer.setUpdatedDate(DateFormatUtil.currentDate());
-							answer.setDeleteFlg(false);
-							
-							answers.add(answer);
-						}
-						
-						questionaireLogic.saveAllQuestionaireQuestionAnswers(answers);
-					}
-				}
-				
-				if(questionObj.getQuestionType().equals(CommonConstant.TRUE_FALSE)) {
-					
-					List<AnswerEntity> answers = new ArrayList<>();
-					
-					if(questionObj.getAnswers().size() != 0) {
-						
-						for(AnswerObj answerObj : questionObj.getAnswers()) {
-							
-							AnswerEntity answer = new AnswerEntity();
-							answer.setQuestionId(questionId);
-							answer.setQuestionaireId(inDto.getId());
-							answer.setAnswer(answerObj.getAnswer());
-							answer.setIsCorrect(answerObj.getIsCorrect());
-							answer.setIsOpen(true);							
-							answer.setCreatedDate(DateFormatUtil.currentDate());
-							answer.setUpdatedDate(DateFormatUtil.currentDate());
-							answer.setDeleteFlg(false);
-							
-							answers.add(answer);
-						}
-						
-						questionaireLogic.saveAllQuestionaireQuestionAnswers(answers);
-					}
-				}
-				
-				if(questionObj.getQuestionType().equals(CommonConstant.IDENTIFICATION)) {
-					
-					AnswerEntity answer = new AnswerEntity();
-					answer.setQuestionId(questionId);
-					answer.setQuestionaireId(inDto.getId());
-					answer.setAnswer(questionObj.getAnswers().get(0).getAnswer());
-					answer.setIsCorrect(questionObj.getAnswers().get(0).getIsCorrect());
-					answer.setIsOpen(true);							
-					answer.setCreatedDate(DateFormatUtil.currentDate());
-					answer.setUpdatedDate(DateFormatUtil.currentDate());
-					answer.setDeleteFlg(false);
-					
-					questionaireLogic.saveQuestionaireQuestionAnswer(answer);
-				}
-				
-				//questions.add(question);
+				saveQuestionImage(questionObj.getQuestionImage(), inDto.getId(), questionId);
+		        
+				saveAnswers(questionObj.getAnswers(), inDto.getId(), questionId);
 			}
 		}
+	}
+	
+	private void saveAnswers(List<AnswerObj> questionAnswers, int questionaireId, int questionId) {
+		
+		List<AnswerEntity> answers = new ArrayList<>();
+		
+		if(questionAnswers != null && questionAnswers.size() != 0) {
+			
+			for(AnswerObj answerObj : questionAnswers) {
+				
+				//If deleted from the questions but already in the database
+				if(answerObj.getHasDeleted() && answerObj.getAnswerId() != 0) {
+					
+					System.out.println("DELETED " + answerObj.getAnswerId());
+					
+					questionaireLogic.deleteAnswerById(answerObj.getAnswerId());
+				
+					continue;
+				}
+				
+				//If already in the database and is not modified or deleted from the questions but is not in the database
+				if(answerObj.getAnswerId() != 0 && !answerObj.getHasModified() || answerObj.getHasDeleted()) {
+					continue;
+				} 
+
+				//If modified and already in the database
+				if(answerObj.getHasModified() && answerObj.getAnswerId() != 0) {
+					
+					questionaireLogic.updateAnswerById(answerObj.getAnswer(), answerObj.getIsCorrect(), answerObj.getAnswerId());
+					
+					continue;
+				}
+			
+				
+				AnswerEntity answer = new AnswerEntity();
+				answer.setQuestionId(questionId);
+				answer.setQuestionaireId(questionaireId);
+				answer.setAnswer(answerObj.getAnswer());
+				answer.setIsCorrect(answerObj.getIsCorrect());
+				answer.setIsOpen(true);							
+				answer.setCreatedDate(DateFormatUtil.currentDate());
+				answer.setUpdatedDate(DateFormatUtil.currentDate());
+				answer.setDeleteFlg(false);
+				
+				answers.add(answer);
+			}
+			
+			questionaireLogic.saveAllQuestionaireQuestionAnswers(answers);
+		}
+	}
+	
+	private void saveQuestionImage(MultipartFile questionImage, int questionaireId, int questionId) throws IOException {
+		
+		Path uploadPath = Paths.get(ApplicationPropertiesRead.getProperty("question.image.path"));
+
+		if (!Files.exists(uploadPath)) {
+			Files.createDirectories(uploadPath);
+		}
+	
+        if (questionImage != null && !questionImage.isEmpty()) {
+   
+            Path questionFolderPath = uploadPath.resolve(String.valueOf(questionId));
+
+            // Recreate the folder
+            Files.createDirectories(questionFolderPath);
+            
+            String originalFilename = questionImage.getOriginalFilename();
+
+            // Define the file path within the subfolder
+            Path filePath = questionFolderPath.resolve(originalFilename);
+
+            // Save the image
+            Files.copy(questionImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        }
 	}
 
 	/**

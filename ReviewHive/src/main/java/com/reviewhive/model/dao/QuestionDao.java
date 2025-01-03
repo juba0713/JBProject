@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,8 @@ public interface QuestionDao extends JpaRepository<QuestionEntity, Integer>{
 			+ "FROM m_question q\r\n"
 			+ "WHERE q.questionaire_id = :questionaireId\r\n"
 			+ "AND q.is_open = true\r\n"
-			+ "AND q.delete_flg = false";
+			+ "AND q.delete_flg = false "
+			+ "ORDER BY q.id ASC ";
 	
 	public static final String GET_QUESTION_ANSWERS_BY_QUESTION_ID = "SELECT a.id,\r\n"
 			+ "	a.question_id,\r\n"
@@ -102,13 +104,37 @@ public interface QuestionDao extends JpaRepository<QuestionEntity, Integer>{
 	/*
 	 * Query for deleting a question
 	 */
-	public static final String DELETE_QUESTION = "DELETE FROM QuestionEntity q WHERE q.questionaireId = :questionaireId";
+	public static final String DELETE_QUESTION_QUESTIONAIRE_ID = "DELETE FROM QuestionEntity q WHERE q.questionaireId = :questionaireId";
 	
 	/**
-	 * Delete Questions
+	 * Delete Questions By Questionaire Id
 	 * @param questionaireId
 	 */
 	@Modifying
-	@Query(value=DELETE_QUESTION)
+	@Query(value=DELETE_QUESTION_QUESTIONAIRE_ID)
 	public void deleteQuestionByQuestionaireId(int questionaireId);
+	
+	/*
+	 * Query for deleting a question
+	 */
+	public static final String DELETE_QUESTION_BY_ID = "DELETE FROM QuestionEntity q WHERE q.id = :questionId";
+	
+	/**
+	 * Delete Questions By Id
+	 * @param questionId
+	 */
+	@Modifying
+	@Query(value=DELETE_QUESTION_BY_ID)
+	public void deleteQuestionById(int questionId);
+	
+	public static final String UPDATE_QUESTION_BY_ID = "UPDATE m_question "
+			+ "SET question = :question, "
+			+ "question_image = :questionImage "
+			+ "WHERE id = :questionId ";
+	
+	@Modifying
+	@Query(value=UPDATE_QUESTION_BY_ID, nativeQuery=true)
+	public void updateQuestionById(@Param("question") String question,
+			@Param("questionImage") String questionImage,
+			@Param("questionId") int questionId);
 }

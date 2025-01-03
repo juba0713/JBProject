@@ -187,4 +187,34 @@ public class QuestionaireLogicImpl implements QuestionaireLogic{
 		answerDao.deleteAnswerByQuestionaireId(questionaireId);
 	}
 
+	@Override
+	public void deleteQuestionbyId(int questionId) {
+		
+		questionDao.deleteQuestionById(questionId);
+	}
+
+	@Override
+	public void deleteAnswersByQuestionId(int questionId) {
+		
+		answerDao.deleteAnswerByQuestionId(questionId);
+	}
+
+	@Override
+	public void updateQuestionById(String question, String questionImage, int questionId) {
+		
+		questionDao.updateQuestionById(question, questionImage, questionId);
+	}
+
+	@Override
+	public void deleteAnswerById(int answerId) {
+		
+		answerDao.deleteAnswerById(answerId);
+	}
+
+	@Override
+	public void updateAnswerById(String answer, Boolean isCorrect, int answerId) {
+		
+		answerDao.updateQuestionById(answer, isCorrect, answerId);
+	}
+
 }
