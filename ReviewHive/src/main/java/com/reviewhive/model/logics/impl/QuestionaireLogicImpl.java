@@ -175,16 +175,89 @@ public class QuestionaireLogicImpl implements QuestionaireLogic{
 		return questionDao.getQuestionDetailsByQuestionaireId(questionaireId);
 	}
 
+	/**
+	 * Delete All Questions by Questonaire Id
+	 * @param questionaireId
+	 */
 	@Override
 	public void deleteQuestionsByQuestionaireId(int questionaireId) {
 		
 		questionDao.deleteQuestionByQuestionaireId(questionaireId);
 	}
 
+	/**
+	 * Delete All Answers by Questionaire Id
+	 * @param questionaireId
+	 */
 	@Override
 	public void deleteAnswersByQuestionaireId(int questionaireId) {
 		
 		answerDao.deleteAnswerByQuestionaireId(questionaireId);
+	}
+
+	/**
+	 * Delete Question By Id
+	 * @param questionId
+	 */
+	@Override
+	public void deleteQuestionbyId(int questionId) {
+		
+		questionDao.deleteQuestionById(questionId);
+	}
+
+	/**
+	 * Delete All Answers By Question Id
+	 * @param questionId
+	 */
+	@Override
+	public void deleteAnswersByQuestionId(int questionId) {
+		
+		answerDao.deleteAnswerByQuestionId(questionId);
+	}
+
+	/**
+	 * Update Question Details By Id
+	 * @param question
+	 * @param questionImage
+	 * @param questionId
+	 */
+	@Override
+	public void updateQuestionById(String question, String questionImage, int questionId) {
+		
+		questionDao.updateQuestionById(question, questionImage, questionId);
+	}
+
+	/**
+	 * Delete Answer By Id
+	 * @param answerId
+	 */
+	@Override
+	public void deleteAnswerById(int answerId) {
+		
+		answerDao.deleteAnswerById(answerId);
+	}
+
+	/**
+	 * Update Answer By Id
+	 * @param answer
+	 * @param isCorrect
+	 * @param answerId
+	 */
+	@Override
+	public void updateAnswerById(String answer, Boolean isCorrect, int answerId) {
+		
+		answerDao.updateQuestionById(answer, isCorrect, answerId);
+	}
+
+	/**
+	 * Update Question Image By Id
+	 * @param questionImage
+	 * @param questionId
+	 */
+	@Override
+	public void updateQuestionImageById(String questionImage, int questionId) {
+		
+		questionDao.updateQuestionImageById(questionImage, questionId);
 	}
 
 }

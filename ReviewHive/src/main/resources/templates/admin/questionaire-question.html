@@ -43,24 +43,40 @@
 					<div class="content-body-sidebar">
 						<div>
 							<div>
-								<span>How many question?</span>
-								<input type="number" value="1" class="prompt-question-count"/>
+								<div>
+									<span>How many question?</span>
+									<input type="number" value="1" class="prompt-question-count"/>
+								</div>
+								<div>
+									<span>Question Type?</span>
+									<select class="prompt-question-type">
+										<option value="1">Multiple Choice</option>
+										<option value="2">True / False</option>
+										<option value="3">Identification</option>
+									</select>
+								</div>
+								<div>
+									<button class="action-btn add-question-btn" type="button">ADD QUESTIONS</button>
+								</div>
 							</div>
 							<div>
-								<span>Question Type?</span>
-								<select class="prompt-question-type">
-									<option value="1">Multiple Choice</option>
-									<option value="2">True / False</option>
-									<option value="3">Identification</option>
-								</select>
-							</div>
-							<div>
-								<button class="action-btn add-question-btn" type="button">ADD QUESTIONS</button>
+								<button class="action-btn cancel-btn" type="button">RESET</button>
+								<button class="action-btn save-btn" type="button" data-toggle="modal" data-target="#confirmModal">SAVE</button>
 							</div>
 						</div>
 						<div>
-							<button class="action-btn cancel-btn" type="button">RESET</button>
-							<button class="action-btn save-btn" type="button" data-toggle="modal" data-target="#confirmModal">SAVE</button>
+							<div class="checkbox-field">
+								<input type="checkbox" name="previousDisabled" />
+								<label>Disabled Previous</label>
+							</div>
+							<div class="checkbox-field">
+								<input type="checkbox" name="previousDisabled" />
+								<label>Disabled Timer</label>
+							</div>
+							<div class="checkbox-field">
+								<input type="checkbox" name="previousDisabled" />
+								<label>Answer Required</label>
+							</div>
 						</div>
 					</div>
 					<div>

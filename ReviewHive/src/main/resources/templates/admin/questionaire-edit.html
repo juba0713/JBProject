@@ -36,6 +36,8 @@
 			<div class="content-body">
 				<form th:action="@{/admin/questionaire-edit}" method="POST">
 					<input type="hidden" name="id" th:value="*{questionaire.id}" />
+					<input type="hidden" name="categoryModified" value="false" class="categoryModified" />
+					<span style="color: #FF0000;">(Warning: Changing the category will permanently delete all associated questions.)</span>
 					<div class="input-fields">
 						<div>
 							<label>Name <span style="color: #FF0000;">*</span></label>
@@ -60,7 +62,7 @@
 						</div>
 						<div>
 							<label>Category <span style="color: #FF0000;">*</span></label>
-							<select name="questionaireCategoryId">
+							<select name="questionaireCategoryId" class="category-select">
 								<option th:each="category : *{categories}" th:value="${category.id}" th:text="${category.categoryName}" th:selected="${category.id} == *{questionaire.categoryId}"></option>
 							</select>
 						</div>
@@ -80,7 +82,18 @@
 		</div>
 	</main>
 	<script th:inline="javascript">
-		console.log(/*[[${questionaireDto}]]*/'');
+		const webDto = /*[[${questionaireDto}]]*/'';
+		
+		let currCategory = webDto.questionaire.categoryId;
+		let hiddenCategoryModified = document.querySelector('.categoryModified');
+		document.querySelector('.category-select').addEventListener('change', function(){
+
+			if(currCategory == this.value){
+				hiddenCategoryModified.value = false;
+			}else{
+				hiddenCategoryModified.value = true;
+			}
+		});
 	</script>
 </body>
 </html>
