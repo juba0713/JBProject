@@ -223,9 +223,9 @@ public class QuestionaireLogicImpl implements QuestionaireLogic{
 	 * @param questionId
 	 */
 	@Override
-	public void updateQuestionById(String question, String questionImage, int questionId) {
+	public void updateQuestionById(String question, int questionId) {
 		
-		questionDao.updateQuestionById(question, questionImage, questionId);
+		questionDao.updateQuestionById(question, questionId);
 	}
 
 	/**

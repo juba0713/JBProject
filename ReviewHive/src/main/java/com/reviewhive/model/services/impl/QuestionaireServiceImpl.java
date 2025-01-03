@@ -189,7 +189,6 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 	    if (questionObj.getHasModified()) {
 	        questionaireLogic.updateQuestionById(
 	            questionObj.getQuestion(),
-	            questionObj.getQuestionImage().getOriginalFilename(),
 	            questionObj.getQuestionId()
 	        );
 	        saveAnswers(questionObj.getAnswers(), inDto.getId(), questionObj.getQuestionId());

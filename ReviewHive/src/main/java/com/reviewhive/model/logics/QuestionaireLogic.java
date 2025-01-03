@@ -140,7 +140,7 @@ public interface QuestionaireLogic {
 	 * @param questionImage
 	 * @param questionId
 	 */
-	public void updateQuestionById(String question, String questionImage, int questionId);
+	public void updateQuestionById(String question, int questionId);
 	
 	/**
 	 * Update Answer By Id
