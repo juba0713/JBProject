@@ -15,6 +15,16 @@ const form = document.querySelector('#form');
 
 let currentTotalQuestion = 1;
 
+function initializeTinyMCE(){
+	tinymce.init({
+        selector: 'textarea', // Apply TinyMCE to all <textarea> elements
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        menubar: false
+    });
+}
+
+
 if(webDto.retrievedQuestions.length != 0){
 	let questionCount = 1;
 	for(let question of webDto.retrievedQuestions){
@@ -70,21 +80,22 @@ if(webDto.retrievedQuestions.length != 0){
 }
 
 
-document.querySelector('.add-question-btn').addEventListener('click', function(){
-		
-	const questionCount = promptQuestionCount.value;
-	const questionType = promptQuestionType.value;
-	
-	totalQuestion.innerHTML = Number(totalQuestion.innerHTML) + Number(questionCount);
+document.querySelector('.add-question-btn').addEventListener('click', function() {
+    const questionCount = promptQuestionCount.value;
+    const questionType = promptQuestionType.value;
+    
+    totalQuestion.innerHTML = Number(totalQuestion.innerHTML) + Number(questionCount);
 
-	for(let count = 1; count <= Number(questionCount); count++){
-		
-		let container = createQuestionContainer(currentTotalQuestion, questionType);
-		
-		contentBodyQuestion.appendChild(container);
-		
-		currentTotalQuestion++;
-	}
+    // Create new question containers and append them
+    for (let count = 1; count <= Number(questionCount); count++) {
+        let container = createQuestionContainer(currentTotalQuestion, questionType);
+        contentBodyQuestion.appendChild(container);
+        currentTotalQuestion++;
+    }
+
+	//tinymce.remove();
+	// Re-initialize TinyMCE after the textareas have been added to the DOM
+	//initializeTinyMCE();
 });
 
 document.querySelector('.enable-timer-toggle').addEventListener('change', function() {
@@ -120,7 +131,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 					<div class="question-content">
 						<div class="question">
 							<div>Question</div>
-							<textarea name="questions[${questionNo-1}].question" class="question-textarea"></textarea>
+							<textarea name="questions[${questionNo-1}].question" class="question-textarea" id="question-textarea"></textarea>
 							<input type="file" style="display: none;" name="questions[${questionNo-1}].questionImage" class="question-input-image" accept=".png, .jpg, .jpeg">
 						</div>
 						<div class="answers answers-${questionNo}">
@@ -302,6 +313,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 	container.querySelector('.question-uploaded-image').addEventListener('click', function(){
 		this.closest('.question-container').querySelector('.question-input-image').click();
 	});
+	
 		
 	return container;
 }
