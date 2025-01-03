@@ -22,6 +22,7 @@ import com.reviewhive.model.dao.entity.QuestionDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionEntity;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
+import com.reviewhive.model.dao.entity.QuestionaireSettingsEntity;
 import com.reviewhive.model.dto.QuestionaireDto;
 import com.reviewhive.model.logics.QuestionaireLogic;
 import com.reviewhive.model.objects.AnswerObj;
@@ -147,7 +148,18 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 	    if (inDto.getQuestions().isEmpty()) return;
 
 	    Timestamp currentDate = DateFormatUtil.currentDate();
-
+	    
+	    questionaireLogic.updateQuestionaireSettings(inDto.getShowAnswerFlg(), 
+	    		inDto.getShowResultFlg(), 
+	    		inDto.getAnswerRequiredFlg(), 
+	    		inDto.getEnablePreviousFlg(), 
+	    		inDto.getEnableTimerFlg(), 
+	    		inDto.getHour(), 
+	    		inDto.getMinute(),
+	    		inDto.getSecond(), 
+	    		currentDate, 
+	    		inDto.getId());
+	    
 	    for (QuestionObj questionObj : inDto.getQuestions()) {
 	        boolean isExisting = questionObj.getQuestionId() != 0;
 
@@ -288,6 +300,24 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 		QuestionaireDto outDto = new QuestionaireDto();
 		
 		List<QuestionDetailsEntity> retrievedQuestions = questionaireLogic.getQuestionaireQuestions(inDto.getId());
+		
+		QuestionaireSettingsEntity settings = questionaireLogic.getQuestionaireSettings(inDto.getId());
+		
+		outDto.setShowAnswerFlg(settings.getShowAnswerFlg());
+		
+		outDto.setShowResultFlg(settings.getShowResultFlg());
+		
+		outDto.setAnswerRequiredFlg(settings.getAnswerRequiredFlg());
+		
+		outDto.setEnablePreviousFlg(settings.getEnablePreviousFlg());
+		
+		outDto.setEnableTimerFlg(settings.getEnableTimerFlg());
+		
+		outDto.setHour(settings.getHour());
+		
+		outDto.setMinute(settings.getMinute());
+		
+		outDto.setSecond(settings.getSecond());
 		
 		outDto.setRetrievedQuestions(retrievedQuestions);
 		

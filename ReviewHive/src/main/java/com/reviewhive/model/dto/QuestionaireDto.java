@@ -38,7 +38,7 @@ public class QuestionaireDto {
 	@NotBlank(message= MessageConstant.CATEGORY_DESCRIPTION_REQUIRED)
 	private String questionaireColor;
 	
-	private Boolean categoryModified;
+	private Boolean categoryModified = false;
 	
 	private List<CategoryEntity> categories;
 	
@@ -53,4 +53,22 @@ public class QuestionaireDto {
 	private List<QuestionObj> questions;
 	
 	private List<QuestionDetailsEntity> retrievedQuestions;
+	
+	private Boolean showAnswerFlg;
+	
+	private Boolean showResultFlg;
+	
+	private Boolean answerRequiredFlg;
+	
+	private Boolean enablePreviousFlg; 
+	
+	private Boolean enableTimerFlg;
+	
+	private String hour;
+	
+	private String minute;
+	
+	private String second;
+	
+	
 }

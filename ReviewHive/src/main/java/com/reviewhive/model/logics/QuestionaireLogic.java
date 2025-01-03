@@ -3,6 +3,7 @@ package com.reviewhive.model.logics;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.reviewhive.model.dao.entity.AnswerEntity;
@@ -10,6 +11,7 @@ import com.reviewhive.model.dao.entity.QuestionDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionEntity;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
+import com.reviewhive.model.dao.entity.QuestionaireSettingsEntity;
 
 /**
  * @author Julius P. Basas
@@ -155,5 +157,35 @@ public interface QuestionaireLogic {
 	 */
 	public void updateQuestionImageById(String questionImage, int questionId);
 	
+	/**
+	 * Update Questionaire Settings
+	 * @param showAnswerFlg
+	 * @param showResultFlg
+	 * @param answerRequiredFlg
+	 * @param enablePreviousFlg
+	 * @param enableTimerFlg
+	 * @param hour
+	 * @param minute
+	 * @param second
+	 * @param updateDate
+	 * @param id
+	 */
+	public void updateQuestionaireSettings(Boolean showAnswerFlg,
+			Boolean showResultFlg,
+			Boolean answerRequiredFlg,
+			Boolean enablePreviousFlg,
+			Boolean enableTimerFlg,
+			String hour,
+			String minute,
+			String second,
+			Timestamp updateDate,
+			int id);
+	
+	/**
+	 * Get Questionaire Settings
+	 * @param id
+	 * @return QuestionaireSettingsEntity
+	 */
+	public QuestionaireSettingsEntity getQuestionaireSettings(int id);
 	
 }
