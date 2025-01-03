@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +105,10 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 			inDto.getUpdateType().equals(CommonConstant.UPDATE_ALL)){
 			status = inDto.getQuestionaireStatus().equals("true") ? true : false;
 		}
+		
+		if(inDto.getCategoryModified()) {
+			questionaireLogic.deleteQuestionsByQuestionaireId(inDto.getId());
+		}
 			
 		switch(inDto.getUpdateType()) {
 			
@@ -139,55 +144,64 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 	 */
 	@Override
 	public void saveQuestionaireQuestion(QuestionaireDto inDto) throws IOException {
-				
-		if(inDto.getQuestions().size() != 0) {
-					
-			for(QuestionObj questionObj : inDto.getQuestions()) {
-				
-				//If deleted from the questions but already in the database
-				if(questionObj.getHasDeleted() && questionObj.getQuestionId() != 0) {
-					
-					questionaireLogic.deleteQuestionbyId(questionObj.getQuestionId());
-					questionaireLogic.deleteAnswersByQuestionId(questionObj.getQuestionId());
-					
-					continue;
-				}
-				
-				//If already in the database and is not modified or deleted from the questions but is not in the database
-				if(questionObj.getQuestionId() != 0 && !questionObj.getHasModified() || questionObj.getHasDeleted()) {
-					continue;
-				} 
+	    if (inDto.getQuestions().isEmpty()) return;
 
-				//If modified and already in the database
-				if(questionObj.getHasModified() && questionObj.getQuestionId() != 0) {
-					
-					questionaireLogic.updateQuestionById(questionObj.getQuestion(), 
-							questionObj.getQuestionImage().getOriginalFilename(), 
-							questionObj.getQuestionId());
-					
-					saveAnswers(questionObj.getAnswers(), inDto.getId(), questionObj.getQuestionId());
-					
-					continue;
-				}
-				
-				QuestionEntity question = new QuestionEntity();
-				question.setQuestionaireId(inDto.getId());
-				question.setQuestionType(questionObj.getQuestionType());
-				question.setQuestion(questionObj.getQuestion());
-				question.setIsOpen(true);
-				question.setCreatedDate(DateFormatUtil.currentDate());
-				question.setUpdatedDate(DateFormatUtil.currentDate());
-				question.setQuestionImage(questionObj.getQuestionImage().getOriginalFilename());
-				question.setDeleteFlg(false);
-				
-				int questionId = questionaireLogic.saveQuestionaireQuestion(question);
-				
-				saveQuestionImage(questionObj.getQuestionImage(), inDto.getId(), questionId);
-		        
-				saveAnswers(questionObj.getAnswers(), inDto.getId(), questionId);
-			}
-		}
+	    Timestamp currentDate = DateFormatUtil.currentDate();
+
+	    for (QuestionObj questionObj : inDto.getQuestions()) {
+	        boolean isExisting = questionObj.getQuestionId() != 0;
+
+	        if (isExisting) {
+	            handleExistingQuestion(questionObj, inDto);
+	        } else {
+	            handleNewQuestion(questionObj, inDto, currentDate);
+	        }
+	    }
 	}
+
+	private void handleExistingQuestion(QuestionObj questionObj, QuestionaireDto inDto) throws IOException {
+	    if (questionObj.getHasDeleted()) {
+	        questionaireLogic.deleteQuestionbyId(questionObj.getQuestionId());
+	        questionaireLogic.deleteAnswersByQuestionId(questionObj.getQuestionId());
+	        return;
+	    }
+
+	    if (questionObj.getHasQuestionImageModified()) {
+	        questionaireLogic.updateQuestionImageById(
+	            questionObj.getQuestionImage().getOriginalFilename(),
+	            questionObj.getQuestionId()
+	        );
+	        saveQuestionImage(questionObj.getQuestionImage(), inDto.getId(), questionObj.getQuestionId());
+	    }
+
+	    if (questionObj.getHasModified()) {
+	        questionaireLogic.updateQuestionById(
+	            questionObj.getQuestion(),
+	            questionObj.getQuestionImage().getOriginalFilename(),
+	            questionObj.getQuestionId()
+	        );
+	        saveAnswers(questionObj.getAnswers(), inDto.getId(), questionObj.getQuestionId());
+	        saveQuestionImage(questionObj.getQuestionImage(), inDto.getId(), questionObj.getQuestionId());
+	    }
+	}
+
+	private void handleNewQuestion(QuestionObj questionObj, QuestionaireDto inDto, Timestamp currentDate) throws IOException {
+	    QuestionEntity question = new QuestionEntity();
+	    question.setQuestionaireId(inDto.getId());
+	    question.setQuestionType(questionObj.getQuestionType());
+	    question.setQuestion(questionObj.getQuestion());
+	    question.setIsOpen(true);
+	    question.setCreatedDate(currentDate);
+	    question.setUpdatedDate(currentDate);
+	    question.setQuestionImage(questionObj.getQuestionImage().getOriginalFilename());
+	    question.setDeleteFlg(false);
+
+	    int questionId = questionaireLogic.saveQuestionaireQuestion(question);
+
+	    saveQuestionImage(questionObj.getQuestionImage(), inDto.getId(), questionId);
+	    saveAnswers(questionObj.getAnswers(), inDto.getId(), questionId);
+	}
+
 	
 	private void saveAnswers(List<AnswerObj> questionAnswers, int questionaireId, int questionId) {
 		

@@ -99,7 +99,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 		<input type="hidden" name="questions[${questionNo-1}].hasDeleted" value="false" class="hasDeleted"/>
 		<input type="hidden" name="questions[${questionNo-1}].hasQuestionImageModified" value="false" class="hasQuestionImageModified"/>
 		<div class="question-image">
-			<img src="/images/no-image.png" class="question-uploaded-image">
+			<img src="/images/no-image.png" style="cursor:pointer;" class="question-uploaded-image">
 		</div>`;
 	
 	switch(questionType){
@@ -112,7 +112,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 						<div class="question">
 							<div>Question</div>
 							<textarea name="questions[${questionNo-1}].question" class="question-textarea"></textarea>
-							<input type="file" name="questions[${questionNo-1}].questionImage" class="question-input-image" accept=".png, .jpg, .jpeg">
+							<input type="file" style="display: none;" name="questions[${questionNo-1}].questionImage" class="question-input-image" accept=".png, .jpg, .jpeg">
 						</div>
 						<div class="answers answers-${questionNo}">
 												
@@ -133,7 +133,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 									<div class="question">
 										<div>Question</div>
 										<textarea name="questions[${questionNo-1}].question" class="question-textarea"></textarea>
-										<input type="file" name="questions[${questionNo-1}].questionImage" class="question-input-image" accept=".png, .jpg, .jpeg">
+										<input type="file" style="display: none;" name="questions[${questionNo-1}].questionImage" class="question-input-image" accept=".png, .jpg, .jpeg">
 									</div>
 									<div class="answers">
 										<div>
@@ -167,7 +167,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 								<div class="question">
 									<div>Question</div>
 									<textarea name="questions[${questionNo-1}].question" class="question-textarea"></textarea>
-									<input type="file" name="questions[${questionNo-1}].questionImage" class="question-input-image" accept=".png, .jpg, .jpeg">
+									<input type="file" style="display: none;" name="questions[${questionNo-1}].questionImage" class="question-input-image" accept=".png, .jpg, .jpeg">
 								</div>
 								<div class="answers">
 									<textarea disabled></textarea>
@@ -231,9 +231,11 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 	
 	//Show Image When Hovered
 	container.querySelector('.question-uploaded-image').addEventListener('mouseover', function(){
-		let displayImage = document.querySelector('.display-image');
-		displayImage.classList.add('show');
-		displayImage.querySelector('img').src = this.src;
+		if(!this.src.includes('no-image')){
+			let displayImage = document.querySelector('.display-image');
+			displayImage.classList.add('show');
+			displayImage.querySelector('img').src = this.src;
+		}
 	});
 	
 	//Unshow Image When Not Hovered
@@ -283,6 +285,14 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 		this.closest('.question-container').querySelector('.hasModified').value = true;
 				
 	}));
+	
+	container.querySelector('.question-input-image').addEventListener('change', function(){
+		this.closest('.question-container').querySelector('.hasQuestionImageModified').value = true;
+	});
+	
+	container.querySelector('.question-uploaded-image').addEventListener('click', function(){
+		this.closest('.question-container').querySelector('.question-input-image').click();
+	});
 		
 	return container;
 }

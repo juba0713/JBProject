@@ -102,14 +102,58 @@ public interface QuestionaireLogic {
 	 */
 	public List<QuestionDetailsEntity> getQuestionaireQuestions(int questionaireId);
 	
+	/**
+	 * Delete All Questions by Questonaire Id
+	 * @param questionaireId
+	 */
 	public void deleteQuestionsByQuestionaireId(int questionaireId);
+	
+	/**
+	 * Delete All Answers by Questionaire Id
+	 * @param questionaireId
+	 */
 	public void deleteAnswersByQuestionaireId(int questionaireId);
+	
+	/**
+	 * Delete Question By Id
+	 * @param questionId
+	 */
 	public void deleteQuestionbyId(int questionId);
+	
+	/**
+	 * Delete All Answers By Question Id
+	 * @param questionId
+	 */
 	public void deleteAnswersByQuestionId(int questionId);
+	
+	/**
+	 * Delete Answer By Id
+	 * @param answerId
+	 */
 	public void deleteAnswerById(int answerId);
 	
+	/**
+	 * Update Question Details By Id
+	 * @param question
+	 * @param questionImage
+	 * @param questionId
+	 */
 	public void updateQuestionById(String question, String questionImage, int questionId);
+	
+	/**
+	 * Update Answer By Id
+	 * @param answer
+	 * @param isCorrect
+	 * @param answerId
+	 */
 	public void updateAnswerById(String answer, Boolean isCorrect, int answerId);
+	
+	/**
+	 * Update Question Image By Id
+	 * @param questionImage
+	 * @param questionId
+	 */
+	public void updateQuestionImageById(String questionImage, int questionId);
 	
 	
 }

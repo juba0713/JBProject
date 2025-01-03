@@ -176,26 +176,26 @@ public class AdminQuestionaireController {
 		 
 		
 	
-		for(QuestionObj question : webDto.getQuestions()) {
-			System.out.println("Question Type: " + question.getQuestionType());
-			System.out.println("Question: " + question.getQuestion());
-			System.out.println("Question Id: " + question.getQuestionId());
-			System.out.println("Question Modified: " + question.getHasModified());
-			System.out.println("Question Deleted: " + question.getHasDeleted());
-			
-			if(question.getAnswers() != null) {
-				for(AnswerObj answer : question.getAnswers()) {
-					System.out.println("Answer: " + answer.getAnswer());
-					System.out.println("Answer Id: " + answer.getAnswerId());
-					System.out.println("Answer Modified: " + answer.getHasModified());
-					System.out.println("Answer Deleted: " + answer.getHasDeleted());
-				}
-				System.out.println("Answer Count" + question.getAnswers().size());
-			}
-			
-			//System.out.println(question.getQuestionImage().getOriginalFilename());
-			System.out.println("----------------------------------------------------------");
-		}
+//		for(QuestionObj question : webDto.getQuestions()) {
+//			System.out.println("Question Type: " + question.getQuestionType());
+//			System.out.println("Question: " + question.getQuestion());
+//			System.out.println("Question Id: " + question.getQuestionId());
+//			System.out.println("Question Modified: " + question.getHasModified());
+//			System.out.println("Question Deleted: " + question.getHasDeleted());
+//			
+//			if(question.getAnswers() != null) {
+//				for(AnswerObj answer : question.getAnswers()) {
+//					System.out.println("Answer: " + answer.getAnswer());
+//					System.out.println("Answer Id: " + answer.getAnswerId());
+//					System.out.println("Answer Modified: " + answer.getHasModified());
+//					System.out.println("Answer Deleted: " + answer.getHasDeleted());
+//				}
+//				System.out.println("Answer Count" + question.getAnswers().size());
+//			}
+//			
+//			//System.out.println(question.getQuestionImage().getOriginalFilename());
+//			System.out.println("----------------------------------------------------------");
+//		}
 		
 		
 		

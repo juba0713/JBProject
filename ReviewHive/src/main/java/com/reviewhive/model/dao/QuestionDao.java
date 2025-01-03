@@ -47,7 +47,8 @@ public interface QuestionDao extends JpaRepository<QuestionEntity, Integer>{
 			+ "FROM t_answer a\r\n"
 			+ "WHERE a.question_id = :questionId\r\n"
 			+ "AND a.is_open = true\r\n"
-			+ "AND a.delete_flg = false";
+			+ "AND a.delete_flg = false "
+			+ "ORDER BY a.id ASC";
 	
 	/**
 	 * Get Questions By Questionaire Id
@@ -136,5 +137,14 @@ public interface QuestionDao extends JpaRepository<QuestionEntity, Integer>{
 	@Query(value=UPDATE_QUESTION_BY_ID, nativeQuery=true)
 	public void updateQuestionById(@Param("question") String question,
 			@Param("questionImage") String questionImage,
+			@Param("questionId") int questionId);
+	
+	public static final String UPDATE_QUESTION_IMAGE_BY_ID = "UPDATE m_question "
+			+ "SET question_image = :questionImage "
+			+ "WHERE id = :questionId ";
+	
+	@Modifying
+	@Query(value=UPDATE_QUESTION_IMAGE_BY_ID, nativeQuery=true)
+	public void updateQuestionImageById(@Param("questionImage") String questionImage,
 			@Param("questionId") int questionId);
 }

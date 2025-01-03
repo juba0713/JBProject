@@ -38,6 +38,8 @@ public class QuestionaireDto {
 	@NotBlank(message= MessageConstant.CATEGORY_DESCRIPTION_REQUIRED)
 	private String questionaireColor;
 	
+	private Boolean categoryModified;
+	
 	private List<CategoryEntity> categories;
 	
 	private List<QuestionaireDetailsEntity> questionaires;
