@@ -309,14 +309,16 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 function createOption(questionNo, answerNo, isCorrect=false, answer='Option', answerId = 0){
 	let answerContainer = document.createElement('div');
 	
+	let letter = String.fromCharCode(65 + answerNo-1);
+	
 	if(isCorrect){
 		answerContainer.innerHTML += `
-					<input type="radio" disabled/>
+					<label>${letter}.</label>
 					<input type="text" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answer" value="${answer}"/>
 					<img class="correct-btn" src="/icons/circle-check.svg" />`;
 	}else{
 		answerContainer.innerHTML += `
-					<input type="radio" disabled/>
+					<label>${letter}.</label>
 					<input type="text" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answer" value="${answer}"/>
 					<img class="correct-btn" src="/icons/circle-check-gray.svg" />`;
 	}
@@ -361,7 +363,24 @@ function createOption(questionNo, answerNo, isCorrect=false, answer='Option', an
 	answerContainer.querySelectorAll('.remove-btn').forEach(btn => btn.addEventListener('click', function(){
 		this.parentElement.style.display = 'none';
 		this.parentElement.querySelector('.hasDeleted').value = true;
+		this.parentElement.setAttribute("deleted", "");
 		this.closest('.question-container').querySelector('.hasModified').value = true;
+		
+		
+		let answerCount = this.closest('.question-container').getAttribute('answercount');
+		this.closest('.question-container').setAttribute('answercount', Number(answerCount) - 1);
+		
+		let labels = this.closest('.answers').querySelectorAll('label');
+		
+		let count = 0;
+		labels.forEach(label => {
+		  if (!label.parentElement.hasAttribute('deleted')) {
+			let letter = String.fromCharCode(65 + count);
+		    label.innerHTML = letter;
+		    count++;
+		  }
+		});
+		
 	}));
 			
 	return answerContainer;
