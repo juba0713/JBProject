@@ -44,6 +44,10 @@
 						<div>
 							<div>
 								<div>
+									<span>Total Question:</span>
+									<span class="total-question">0</span>
+								</div>
+								<div>
 									<span>How many question?</span>
 									<input type="number" value="1" class="prompt-question-count"/>
 								</div>
@@ -59,30 +63,64 @@
 									<button class="action-btn add-question-btn" type="button">ADD QUESTIONS</button>
 								</div>
 							</div>
-							<div>
-								<button class="action-btn cancel-btn" type="button">RESET</button>
-								<button class="action-btn save-btn" type="button" data-toggle="modal" data-target="#confirmModal">SAVE</button>
+						</div>
+						<div>
+							<div>Questionaire Settings</div>
+							<div class="checkbox-field">							
+								<label class="switch">
+								  <input type="checkbox" name="showAnswerFlg" class="show-answer-toggle" th:checked="*{showAnswerFlg}">
+								  <span class="slider round"></span>
+								</label>
+								<label>Show Answer</label>
+							</div>
+							<div class="checkbox-field">							
+								<label class="switch">
+								  <input type="checkbox" name="showResultFlg" class="show-result-toggle" th:checked="*{showResultFlg}">
+								  <span class="slider round"></span>
+								</label>
+								<label>Show Result</label>
+							</div>
+								<div class="checkbox-field">							
+								<label class="switch">
+								  <input type="checkbox" name="answerRequiredFlg" class="answer-required-toggle" th:checked="*{answerRequiredFlg}">
+								  <span class="slider round"></span>
+								</label>
+								<label>Answer Required</label>
+							</div>
+							<div class="checkbox-field">							
+								<label class="switch">
+								  <input type="checkbox" name="enablePreviousFlg" class="enable-previous-toggle" th:checked="*{enablePreviousFlg}">
+								  <span class="slider round"></span>
+								</label>
+								<label>Enable Previous</label>
+							</div>
+							<div class="checkbox-field">							
+								<label class="switch">
+								  <input type="checkbox" name="enableTimerFlg" class="enable-timer-toggle" th:checked="*{enableTimerFlg}">
+								  <span class="slider round"></span>
+								</label>
+								<label>Enable Timer</label>
+							</div>
+							<div class="timer-field">
+								<div>
+									<label>Hour</label>
+									<input type="number" min="0" max="24" name="hour" th:value="*{hour}" th:disabled="*{!enableTimerFlg}"/>
+								</div>
+								<div>
+									<label>Minute</label>
+									<input type="number" min="0" max="59" name="minute" th:value="*{minute}" th:disabled="*{!enableTimerFlg}"/>
+								</div>
+								<div>
+									<label>Second</label>
+									<input type="number" min="0" max="59" name="second" th:value="*{second}" th:disabled="*{!enableTimerFlg}"/>
+								</div>
 							</div>
 						</div>
 						<div>
-							<div class="checkbox-field">
-								<input type="checkbox" name="previousDisabled" />
-								<label>Disabled Previous</label>
-							</div>
-							<div class="checkbox-field">
-								<input type="checkbox" name="previousDisabled" />
-								<label>Disabled Timer</label>
-							</div>
-							<div class="checkbox-field">
-								<input type="checkbox" name="previousDisabled" />
-								<label>Answer Required</label>
-							</div>
+							<button class="action-btn cancel-btn" type="button">RESET</button>
+							<button class="action-btn save-btn" type="button" data-toggle="modal" data-target="#confirmModal">SAVE</button>
 						</div>
-					</div>
-					<div>
-						<span>Total Question:</span>
-						<span class="total-question">0</span>
-					</div>
+					</div>					
 					<div class="content-body-question">
 						
 						<!--Drop Zone of Questions -->

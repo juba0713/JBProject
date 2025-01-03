@@ -87,6 +87,15 @@ document.querySelector('.add-question-btn').addEventListener('click', function()
 	}
 });
 
+document.querySelector('.enable-timer-toggle').addEventListener('change', function() {
+    const timerFields = document.querySelectorAll('.timer-field input');
+
+    const isChecked = this.checked;
+    timerFields.forEach(input => {
+        input.disabled = !isChecked;
+    });
+});
+
 function createQuestionContainer(questionNo, questionType, questionId=0){
 	
 	const container = document.createElement('div');

@@ -50,4 +50,21 @@ public class QuestionaireEntity {
 	@Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
 	private Boolean deleteFlg;
 	
+	private Boolean showAnswerFlg;
+	
+	private Boolean showResultFlg;
+	
+	private Boolean answerRequiredFlg;
+	
+	private Boolean enablePreviousFlg; 
+	
+	private Boolean enableTimerFlg;
+	
+	private String hour;
+	
+	private String minute;
+	
+	private String second;
+
+	
 }

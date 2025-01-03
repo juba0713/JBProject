@@ -164,7 +164,25 @@ public class AdminQuestionaireController {
 		
 		webDto.setQuestionaire(questionaireService.getQuestionaireById(webDto).getQuestionaire());
 		
-		webDto.setRetrievedQuestions(questionaireService.getQuestionaireQuestions(webDto).getRetrievedQuestions());
+		QuestionaireDto outDto = questionaireService.getQuestionaireQuestions(webDto);
+		
+		webDto.setRetrievedQuestions(outDto.getRetrievedQuestions());
+		
+		webDto.setShowAnswerFlg(outDto.getShowAnswerFlg());
+		
+		webDto.setShowResultFlg(outDto.getShowResultFlg());
+		
+		webDto.setAnswerRequiredFlg(outDto.getAnswerRequiredFlg());
+		
+		webDto.setEnablePreviousFlg(outDto.getEnablePreviousFlg());
+		
+		webDto.setEnableTimerFlg(outDto.getEnableTimerFlg());
+		
+		webDto.setHour(outDto.getHour());
+		
+		webDto.setMinute(outDto.getMinute());
+		
+		webDto.setSecond(outDto.getSecond());
 		
 		System.out.println(webDto.getId());
 		

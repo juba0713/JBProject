@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
+import com.reviewhive.model.dao.entity.QuestionaireSettingsEntity;
 
 /**
  * @author Julius P. Basas
@@ -157,4 +158,76 @@ public interface QuestionaireDao extends JpaRepository<QuestionaireEntity, Integ
 	@Modifying
 	@Query(value=UPDATE_QUESTIONAIRE_DELETE, nativeQuery=true)
 	public void updateQuestionaireDelete(@Param("id") int id);
+	
+	/*
+	 * Query for updating Questionaire settings
+	 */
+	public static final String UPDATE_QUESTIONAIRE_SETTINGS = "UPDATE m_questionaire "
+			+ "SET show_answer_flg = :showAnswerFlg, "
+			+ "show_result_flg = :showResultFlg, "
+			+ "answer_required_flg = :answerRequiredFlg, "
+			+ "enable_previous_flg = :enablePreviousFlg, "
+			+ "enable_timer_flg = :enableTimerFlg, "
+			+ "hour = :hour, "
+			+ "minute = :minute, "
+			+ "second = :second, "
+			+ "updated_date = :updateDate "
+			+ "WHERE id = :id ";
+	
+	/**
+	 * Update Questionaire all
+	 * @param status
+	 * @param id
+	 */
+	@Modifying
+	@Query(value=UPDATE_QUESTIONAIRE_SETTINGS, nativeQuery=true)
+	public void updateQuestionaireSettings(
+			@Param("showAnswerFlg") Boolean showAnswerFlg,
+			@Param("showResultFlg") Boolean showResultFlg,
+			@Param("answerRequiredFlg") Boolean answerRequiredFlg,
+			@Param("enablePreviousFlg") Boolean enablePreviousFlg,
+			@Param("enableTimerFlg") Boolean enableTimerFlg,
+			@Param("hour") String hour,
+			@Param("minute") String minute,
+			@Param("second") String second,
+			@Param("updateDate") Timestamp updateDate,
+			@Param("id") int id);
+	
+	/*
+	 * Query for Getting All Query
+	 */
+	public static final String GET_QUESTIONAIRE_SETTINGS = "SELECT a.show_answer_flg, "
+			+ "a.show_result_flg, "
+			+ "a.answer_required_flg, "
+			+ "a.enable_previous_flg, "
+			+ "a.enable_timer_flg, "
+			+ "a.hour, "
+			+ "a.minute, "
+			+ "a.second "
+			+ "FROM m_questionaire a "
+			+ "WHERE a.id = :id "
+			+ "AND a.is_open = true "
+			+ "AND a.delete_flg = false ";	
+	/**
+	 * Get All Category Raw
+	 * @return List<Object[]>
+	 * @throws DataAccessException
+	 */
+	@Query(value=GET_QUESTIONAIRE_SETTINGS, nativeQuery=true)
+	public List<Object[]> getQuestonaireSettingsRaw(
+			@Param("id") int id) throws DataAccessException;
+	
+	/**
+	 * Get All Questonaire By Page
+	 * @param limit
+	 * @param offset
+	 * @return List<QuestionaireDetailsEntity>
+	 */
+	default QuestionaireSettingsEntity getQuestonaireSettings(int id){
+		List<Object[]> rawResults = getQuestonaireSettingsRaw(id);
+
+	    QuestionaireSettingsEntity questionaireSettings = new QuestionaireSettingsEntity(rawResults.get(0));  
+	    	
+	    return questionaireSettings;
+	}
 }

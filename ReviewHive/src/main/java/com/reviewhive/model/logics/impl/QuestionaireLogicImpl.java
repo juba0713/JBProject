@@ -15,6 +15,7 @@ import com.reviewhive.model.dao.entity.QuestionDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionEntity;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
+import com.reviewhive.model.dao.entity.QuestionaireSettingsEntity;
 import com.reviewhive.model.logics.QuestionaireLogic;
 
 /**
@@ -258,6 +259,47 @@ public class QuestionaireLogicImpl implements QuestionaireLogic{
 	public void updateQuestionImageById(String questionImage, int questionId) {
 		
 		questionDao.updateQuestionImageById(questionImage, questionId);
+	}
+
+	/**
+	 * Update Questionaire Settings
+	 * @param showAnswerFlg
+	 * @param showResultFlg
+	 * @param answerRequiredFlg
+	 * @param enablePreviousFlg
+	 * @param enableTimerFlg
+	 * @param hour
+	 * @param minute
+	 * @param second
+	 * @param updateDate
+	 * @param id
+	 */
+	@Override
+	public void updateQuestionaireSettings(Boolean showAnswerFlg, Boolean showResultFlg, Boolean answerRequiredFlg,
+			Boolean enablePreviousFlg, Boolean enableTimerFlg, String hour, String minute, String second,
+			Timestamp updateDate, int id) {
+		
+		questionaireDao.updateQuestionaireSettings(showAnswerFlg, 
+				showResultFlg, 
+				answerRequiredFlg, 
+				enablePreviousFlg, 
+				enableTimerFlg, 
+				hour, 
+				minute, 
+				second, 
+				updateDate, 
+				id);
+	}
+
+	/**
+	 * Get Questionaire Settings
+	 * @param id
+	 * @return QuestionaireSettingsEntity
+	 */
+	@Override
+	public QuestionaireSettingsEntity getQuestionaireSettings(int id) {
+		
+		return questionaireDao.getQuestonaireSettings(id);
 	}
 
 }
