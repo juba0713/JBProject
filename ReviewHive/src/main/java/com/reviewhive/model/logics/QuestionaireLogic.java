@@ -188,4 +188,11 @@ public interface QuestionaireLogic {
 	 */
 	public QuestionaireSettingsEntity getQuestionaireSettings(int id);
 	
+	/**
+	 * Update Answer Image By Answer Id
+	 * @param answerImage
+	 * @param answerId
+	 */
+	public void updateAnswerImageByAnswerId(String answerImage, int answerId);
+	
 }

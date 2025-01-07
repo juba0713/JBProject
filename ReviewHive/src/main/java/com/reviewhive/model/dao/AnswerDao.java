@@ -68,4 +68,13 @@ public interface AnswerDao extends JpaRepository<AnswerEntity, Integer> {
 	public void updateQuestionById(@Param("answer") String answer,
 			@Param("isCorrect") Boolean isCorrect,
 			@Param("answerId") int answerId);
+	
+	public static final String UPDATE_ANSWER_IMAGE = "UPDATE t_answer "
+			+ "SET answer_image = :answerImage "
+			+ "WHERE id = :answerId ";
+	
+	@Modifying
+	@Query(value=UPDATE_ANSWER_IMAGE, nativeQuery=true)
+	public void updateAnswerImage(@Param("answerImage") String answerImage,
+			@Param("answerId") int answerId);
 }

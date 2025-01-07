@@ -56,6 +56,11 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 		questionaire.setCreatedDate(DateFormatUtil.currentDate());
 		questionaire.setUpdatedDate(DateFormatUtil.currentDate());
 		questionaire.setDeleteFlg(false);
+		questionaire.setShowAnswerFlg(false);
+		questionaire.setShowResultFlg(false);
+		questionaire.setAnswerRequiredFlg(false);
+		questionaire.setEnablePreviousFlg(false);
+		questionaire.setEnableTimerFlg(false);
 		
 		questionaireLogic.saveQuestionaire(questionaire);
 	}
@@ -109,6 +114,7 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 		
 		if(inDto.getCategoryModified()) {
 			questionaireLogic.deleteQuestionsByQuestionaireId(inDto.getId());
+			questionaireLogic.deleteAnswersByQuestionaireId(inDto.getId());
 		}
 			
 		switch(inDto.getUpdateType()) {
@@ -149,20 +155,20 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 
 	    Timestamp currentDate = DateFormatUtil.currentDate();
 	    
-	    questionaireLogic.updateQuestionaireSettings(inDto.getShowAnswerFlg(), 
-	    		inDto.getShowResultFlg(), 
-	    		inDto.getAnswerRequiredFlg(), 
-	    		inDto.getEnablePreviousFlg(), 
-	    		inDto.getEnableTimerFlg(), 
+	    questionaireLogic.updateQuestionaireSettings(inDto.getShowAnswerFlg() != null ? true : false, 
+	    		inDto.getShowResultFlg() != null ? true : false, 
+	    		inDto.getAnswerRequiredFlg() != null ? true : false, 
+	    		inDto.getEnablePreviousFlg() != null ? true : false, 
+	    		inDto.getEnableTimerFlg() != null ? true : false, 
 	    		inDto.getHour(), 
 	    		inDto.getMinute(),
 	    		inDto.getSecond(), 
 	    		currentDate, 
 	    		inDto.getId());
-	    
+	    	    
 	    for (QuestionObj questionObj : inDto.getQuestions()) {
 	        boolean isExisting = questionObj.getQuestionId() != 0;
-
+	        
 	        if (isExisting) {
 	            handleExistingQuestion(questionObj, inDto);
 	        } else {
@@ -213,23 +219,39 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 	    saveAnswers(questionObj.getAnswers(), inDto.getId(), questionId);
 	}
 
-	
-	private void saveAnswers(List<AnswerObj> questionAnswers, int questionaireId, int questionId) {
+	private void saveAnswers(List<AnswerObj> questionAnswers, int questionaireId, int questionId) throws IOException {
 		
 		List<AnswerEntity> answers = new ArrayList<>();
 		
 		if(questionAnswers != null && questionAnswers.size() != 0) {
-			
+			int count = 0;
 			for(AnswerObj answerObj : questionAnswers) {
 				
+				count++;
+				
+				String originalFilename = answerObj.getAnswerImage().getOriginalFilename();
+		        String fileExtension = "";
+
+		        if (originalFilename != null && originalFilename.contains(".")) {
+		            fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+		        }
+
+		        // Define the filename with the extension
+		        String newFilename = "answer-image" + "-" + count + fileExtension;
+
 				//If deleted from the questions but already in the database
 				if(answerObj.getHasDeleted() && answerObj.getAnswerId() != 0) {
-					
-					System.out.println("DELETED " + answerObj.getAnswerId());
 					
 					questionaireLogic.deleteAnswerById(answerObj.getAnswerId());
 				
 					continue;
+				}
+				if(answerObj.getHasAnswerImageModified() && answerObj.getAnswerId() != 0) {
+					questionaireLogic.updateAnswerImageByAnswerId(
+							newFilename,
+				            answerObj.getAnswerId()
+				        );
+				        saveAnswerImage(answerObj.getAnswerImage(), questionaireId, questionId, newFilename);
 				}
 				
 				//If already in the database and is not modified or deleted from the questions but is not in the database
@@ -251,18 +273,20 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 				answer.setQuestionaireId(questionaireId);
 				answer.setAnswer(answerObj.getAnswer());
 				answer.setIsCorrect(answerObj.getIsCorrect());
+				answer.setAnswerImage(newFilename);
 				answer.setIsOpen(true);							
 				answer.setCreatedDate(DateFormatUtil.currentDate());
 				answer.setUpdatedDate(DateFormatUtil.currentDate());
 				answer.setDeleteFlg(false);
 				
 				answers.add(answer);
+				saveAnswerImage(answerObj.getAnswerImage(), questionaireId, questionId, newFilename);
 			}
 			
 			questionaireLogic.saveAllQuestionaireQuestionAnswers(answers);
 		}
 	}
-	
+
 	private void saveQuestionImage(MultipartFile questionImage, int questionaireId, int questionId) throws IOException {
 		
 		Path uploadPath = Paths.get(ApplicationPropertiesRead.getProperty("question.image.path"));
@@ -278,6 +302,7 @@ public class QuestionaireServiceImpl implements QuestionaireService {
             // Recreate the folder
             Files.createDirectories(questionFolderPath);
             
+            // Get the original filename and extract the extension
             String originalFilename = questionImage.getOriginalFilename();
 
             // Define the file path within the subfolder
@@ -287,6 +312,26 @@ public class QuestionaireServiceImpl implements QuestionaireService {
             Files.copy(questionImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         }
 	}
+	
+	private void saveAnswerImage(MultipartFile answerImage, int questionaireId, int questionId, String answerImageName) throws IOException {
+	    // Construct the folder path based on the question ID
+	    Path questionFolderPath = Paths.get(ApplicationPropertiesRead.getProperty("question.image.path"), String.valueOf(questionId));
+
+	    // Ensure the directory exists; if not, create it
+	    if (!Files.exists(questionFolderPath)) {
+	        Files.createDirectories(questionFolderPath);
+	    }
+
+	    if (answerImage != null && !answerImage.isEmpty()) {
+
+	        // Construct the full file path
+	        Path filePath = questionFolderPath.resolve(answerImageName);
+
+	        // Save the image
+	        Files.copy(answerImage.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+	    }
+	}
+
 
 	/**
 	 * Get Questionaire Questions & Answers

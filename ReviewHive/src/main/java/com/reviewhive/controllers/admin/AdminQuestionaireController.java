@@ -192,8 +192,6 @@ public class AdminQuestionaireController {
 		
 		webDto.setSecond(outDto.getSecond());
 		
-		System.out.println(webDto.getId());
-		
 		return "admin/questionaire-question";
 	}
 	 
@@ -212,6 +210,7 @@ public class AdminQuestionaireController {
 //			if(question.getAnswers() != null) {
 //				for(AnswerObj answer : question.getAnswers()) {
 //					System.out.println("Answer: " + answer.getAnswer());
+//					System.out.println("Answer Image" + answer.getAnswerImage().getOriginalFilename());
 //					System.out.println("Answer Id: " + answer.getAnswerId());
 //					System.out.println("Answer Modified: " + answer.getHasModified());
 //					System.out.println("Answer Deleted: " + answer.getHasDeleted());
@@ -231,7 +230,7 @@ public class AdminQuestionaireController {
 		
 		//webDto.getQuestions().removeIf(QuestionObj::hasNullField);
 		//webDto.getQuestions().forEach(question -> question.getAnswers().removeIf(AnswerObj::hasNullField));
-		
+		//System.out.println(webDto.getQuestions().getFirst().getAnswers().size());
 		questionaireService.saveQuestionaireQuestion(webDto);
 		
 		return "redirect:/admin/questionaire-list";
