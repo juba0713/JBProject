@@ -70,5 +70,7 @@ public class QuestionaireDto {
 	
 	private String second;
 	
+	private Boolean questionModified;
+	
 	
 }

@@ -39,6 +39,7 @@
 			<div class="content-body">
 				<form th:action="@{/admin/test}" method="POST" id="form" enctype="multipart/form-data">
 					<input type="hidden" name="id" th:value="*{id}" />
+					<input type="hidden" name="questionModified" value="false" class="question-modified"/>
 					<div class="content-body-sidebar">
 						<div>
 							<div>
@@ -95,7 +96,7 @@
 							</div>
 							<div class="checkbox-field">							
 								<label class="switch">
-								  <input type="checkbox" name="enableTimerFlg" class="enable-timer-toggle" th:checked="*{enableTimerFlg}">
+								  <input type="checkbox" name="enableTimerFlg" class="enable-timer-toggle"  th:checked="*{enableTimerFlg}">
 								  <span class="slider round"></span>
 								</label>
 								<label>Enable Timer</label>

@@ -11,7 +11,18 @@ const promptQuestionCount = document.querySelector('.prompt-question-count');
 const promptQuestionType = document.querySelector('.prompt-question-type');
 const totalQuestion = document.querySelector('.total-question');
 
+const modifiedQuestionHidden = document.querySelector('.question-modified');
+
 const form = document.querySelector('#form');
+
+const TRASH_IMAGE_ICON = "/icons/trash-image.svg";
+const IMAGE_ICON = "/icons/image.svg";
+const CIRCLE_CHECK_ICON = "/icons/circle-check.svg";
+const CIRCLE_CHECK_GRAY_ICON = "/icons/circle-check-gray.svg";
+const X_SQUARE_ICON = "/icons/x-square.svg";
+const X_CIRCLE_ICON = "/icons/warning.svg";
+const ADD_ICON = "/icons/add-square.svg";
+const NO_IMAGE = "/images/no-image.png"
 
 let currentTotalQuestion = 1;
 
@@ -44,9 +55,16 @@ if(webDto.retrievedQuestions.length != 0){
 			if(question.answers != 0){
 				let answerCount = 1;
 				for(let answer of question.answers){
-					console.log("AW");
-					let answerContainer = createOption(questionCount, answerCount, answer.isCorrect, answer.answer, answer.id);
+					let answerContainer = createOption(questionCount, answerCount, answer.isCorrect, answer.answer, answer.id, answer.answerImage);
 					answersContainer.appendChild(answerContainer);
+					
+					if(answer.answerImage != null && answer.answerImage != ""){
+						let answerImageCont = document.createElement('img');
+						answerImageCont.classList.add('answer-image');
+				        answerImageCont.src = `/view/image/${question.id}/${answer.answerImage}`;
+				        answerContainer.appendChild(answerImageCont);
+					}
+	
 					answerCount++;	
 				}	
 				container.setAttribute('answerCount', answerCount-1);
@@ -56,10 +74,10 @@ if(webDto.retrievedQuestions.length != 0){
 		if(question.questionType == TRUE_FALSE){
 			if(question.answers[0].isCorrect){
 				answersContainer.querySelectorAll('input[type="hidden"]')[0].value = true;
-				answersContainer.querySelectorAll('img')[0].src = '/icons/circle-check.svg';
+				answersContainer.querySelectorAll('img')[0].src = CIRCLE_CHECK_ICON;
 			}else if(question.answers[1].isCorrect){
 				answersContainer.querySelectorAll('input[type="hidden"]')[1].value = true;
-				answersContainer.querySelectorAll('img')[1].src = '/icons/circle-check.svg';
+				answersContainer.querySelectorAll('img')[1].src = CIRCLE_CHECK_ICON;
 			}
 			
 		}
@@ -92,6 +110,8 @@ document.querySelector('.add-question-btn').addEventListener('click', function()
         contentBodyQuestion.appendChild(container);
         currentTotalQuestion++;
     }
+    
+    modifiedQuestion();
 
 	//tinymce.remove();
 	// Re-initialize TinyMCE after the textareas have been added to the DOM
@@ -138,12 +158,13 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 												
 						</div>
 					</div>							
-					<div class="question-settings">
-						<img src="/icons/x-square.svg" class="remove-question-btn"/>
-						<img src="/icons/add-square.svg" class="add-option" />
+					<div class="question-settings">						
+						<img src="${X_SQUARE_ICON}" class="remove-question-btn"/>
+						<img src="${ADD_ICON}" class="add-option" />
 					</div>`;		
 					
 			container.querySelector('.answers').appendChild(createOption(questionNo, 1));
+					
 					
 			break;
 					
@@ -159,7 +180,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 										<div>
 											<input type="radio" disabled/>
 											<div>True</div>
-											<img class="correct-btn" src="/icons/circle-check-gray.svg" />
+											<img class="correct-btn" src="${CIRCLE_CHECK_ICON}" />
 											<input type="hidden" name="questions[${questionNo-1}].answers[0].isCorrect" value="false" />
 											<input type="hidden" name="questions[${questionNo-1}].answers[0].answer" value="True" />
 											<input type="hidden" name="questions[${questionNo-1}].answers[0].hasModified" value="false" class="hasModified"/>
@@ -168,7 +189,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 										<div>
 											<input type="radio" disabled/>
 											<div>False</div>
-											<img class="correct-btn" src="/icons/circle-check-gray.svg" />
+											<img class="correct-btn" src="${CIRCLE_CHECK_GRAY_ICON}" />
 											<input type="hidden" name="questions[${questionNo-1}].answers[1].isCorrect" value="false" />
 											<input type="hidden" name="questions[${questionNo-1}].answers[1].answer" value="False" />
 											<input type="hidden" name="questions[${questionNo-1}].answers[1].hasModified" value="false" class="hasModified"/>
@@ -177,7 +198,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 									</div>
 								</div>							
 								<div class="question-settings">
-									<img src="/icons/x-square.svg" class="remove-question-btn"/>
+									<img src="${X_SQUARE_ICON}" class="remove-question-btn"/>
 								</div>`;
 			
 			break;
@@ -198,7 +219,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 								</div>
 							</div>							
 							<div class="question-settings">
-								<img src="/icons/x-square.svg" class="remove-question-btn"/>								
+								<img src="${X_SQUARE_ICON}" class="remove-question-btn"/>								
 							</div>`;
 			break;
 		default:
@@ -262,7 +283,7 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 	container.querySelector('.question-uploaded-image').addEventListener('mouseout', function(){
 		let displayImage = document.querySelector('.display-image');
 		displayImage.classList.remove('show');
-		displayImage.src = '/images/no-image.png';
+		displayImage.src = NO_IMAGE;
 	});
 	
 	//Add Event Listener to the Add Choice of Multiple Choice
@@ -295,15 +316,14 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 		let hiddenCorrectValue = parentElement.querySelector('input[type="hidden"]');
 		
 		if(this.classList.contains('correct')){
-			this.src = '/icons/circle-check.svg';
+			this.src = CIRCLE_CHECK_ICON;
 			hiddenCorrectValue.value = true;
 		}else{
-			this.src = '/icons/circle-check-gray.svg';
+			this.src = CIRCLE_CHECK_GRAY_ICON;
 			hiddenCorrectValue.value = false;
 		}
 
-		this.closest('.question-container').querySelector('.hasModified').value = true;
-				
+		this.closest('.question-container').querySelector('.hasModified').value = true;			
 	}));
 	
 	container.querySelector('.question-input-image').addEventListener('change', function(){
@@ -313,67 +333,80 @@ function createQuestionContainer(questionNo, questionType, questionId=0){
 	container.querySelector('.question-uploaded-image').addEventListener('click', function(){
 		this.closest('.question-container').querySelector('.question-input-image').click();
 	});
-	
 		
 	return container;
 }
 
-function createOption(questionNo, answerNo, isCorrect=false, answer='Option', answerId = 0){
+function createOption(questionNo, answerNo, isCorrect=false, answer='Option', answerId = 0, answerImage = ""){
 	let answerContainer = document.createElement('div');
 	
-	let letter = String.fromCharCode(65 + answerNo-1);
+	let answerContent = document.createElement('div');
+
+	let imageIcon = IMAGE_ICON;
 	
-	if(isCorrect){
-		answerContainer.innerHTML += `
-					<label>${letter}.</label>
-					<input type="text" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answer" value="${answer}"/>
-					<img class="correct-btn" src="/icons/circle-check.svg" />`;
-	}else{
-		answerContainer.innerHTML += `
-					<label>${letter}.</label>
-					<input type="text" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answer" value="${answer}"/>
-					<img class="correct-btn" src="/icons/circle-check-gray.svg" />`;
+	if(answerImage != ""){
+		imageIcon = TRASH_IMAGE_ICON
 	}
 	
-	answerContainer.innerHTML += `
-					<input type="hidden" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].isCorrect" value="false"/>
+	if(isCorrect){
+		answerContent.innerHTML += `
+					<label>${getLetter(answerNo)}.</label>
+					<input type="text" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answer" value="${answer}" class="answer-label"/>
+					<input type="file" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answerImage" accept=".png, .jpg, .jpeg" class="hidden-answer-image" style="display: none"/>
+					<img src="${imageIcon}" class="image-btn" />
+					<img class="correct-btn correct" src="/icons/circle-check.svg" />`;
+	}else{
+		answerContent.innerHTML += `
+					<label>${getLetter(answerNo)}.</label>
+					<input type="text" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answer" value="${answer}" class="answer-label"/>
+					<input type="file" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answerImage" accept=".png, .jpg, .jpeg" class="hidden-answer-image" style="display: none"/>
+					<img src="${imageIcon}" class="image-btn" />
+					<img class="correct-btn " src="/icons/circle-check-gray.svg" />`;
+	}
+	
+	answerContent.innerHTML += `
+					<input type="hidden" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].hasAnswerImageModified" class="answer-image-modified" value="false"/>
+					<input type="hidden" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].isCorrect" value="false" class="is-correct"/>
 					<input type="hidden" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].answerId" value="${answerId}"/>
-					<input type="hidden" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].hasModified" value="false" class="hasModified"/>
+					<input type="hidden" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].hasModified" value="false" class="hasAnswerModified"/>
 					<input type="hidden" name="questions[${questionNo-1}].answers[${Number(answerNo-1)}].hasDeleted" value="false" class="hasDeleted"/>`;
 	
 	if(answerNo > 1){
 		let remove = document.createElement('img');
 		remove.classList.add('remove-btn');
-		remove.src = '/icons/warning.svg';
-		answerContainer.appendChild(remove);	
+		remove.src = X_CIRCLE_ICON;
+		answerContent.appendChild(remove);	
 	}else{
-		answerContainer.querySelector('.correct-btn').classList.add('not-delete');
+		answerContent.querySelector('.correct-btn').classList.add('not-delete');
 	}
 	
 	//Add Event Listener to the Check Buttons
-	answerContainer.querySelectorAll('.correct-btn').forEach(btn => btn.addEventListener('click', function(){
+	answerContent.querySelectorAll('.correct-btn').forEach(btn => btn.addEventListener('click', function(){
 		this.classList.toggle('correct');
 		
 		const parentElement = this.parentElement;
 		
-		let hiddenCorrectValue = parentElement.querySelector('input[type="hidden"]');
+		let hiddenCorrectValue = parentElement.querySelector('.is-correct');
 		
 		if(this.classList.contains('correct')){
-			this.src = '/icons/circle-check.svg';
+			this.src = CIRCLE_CHECK_ICON;
 			hiddenCorrectValue.value = true;
 		}else{
-			this.src = '/icons/circle-check-gray.svg';
+			this.src = CIRCLE_CHECK_GRAY_ICON;
 			hiddenCorrectValue.value = false;
 		}
 		
-		parentElement.querySelector('.hasModified').value = true;
-		this.closest('.question-container').querySelector('.hasModified').value = true;
-		
-				
+		this.closest('.question-container').querySelector('.hasModified').value = true;	
+		this.parentElement.querySelector('.hasAnswerModified').value = true;
 	}));
 	
-	answerContainer.querySelectorAll('.remove-btn').forEach(btn => btn.addEventListener('click', function(){
-		this.parentElement.style.display = 'none';
+	answerContent.querySelectorAll('.answer-label').forEach(label => label.addEventListener('input', function(){
+		this.closest('.question-container').querySelector('.hasModified').value = true;	
+		this.parentElement.querySelector('.hasAnswerModified').value = true;
+	}));
+	
+	answerContent.querySelectorAll('.remove-btn').forEach(btn => btn.addEventListener('click', function(){
+		this.parentElement.parentElement.style.display = 'none';
 		this.parentElement.querySelector('.hasDeleted').value = true;
 		this.parentElement.setAttribute("deleted", "");
 		this.closest('.question-container').querySelector('.hasModified').value = true;
@@ -384,16 +417,56 @@ function createOption(questionNo, answerNo, isCorrect=false, answer='Option', an
 		
 		let labels = this.closest('.answers').querySelectorAll('label');
 		
-		let count = 0;
+		let count = 1;
 		labels.forEach(label => {
 		  if (!label.parentElement.hasAttribute('deleted')) {
-			let letter = String.fromCharCode(65 + count);
-		    label.innerHTML = letter;
+		    label.innerHTML = getLetter(count);
 		    count++;
 		  }
 		});
 		
 	}));
-			
+	
+	answerContent.querySelectorAll('.image-btn').forEach(btn => btn.addEventListener('click', function(){
+		
+		if(this.src.includes('trash')){
+			this.parentElement.parentElement.querySelector('.answer-image').remove();
+			this.src=IMAGE_ICON;
+		}else{
+			this.parentElement.querySelector('.hidden-answer-image').click();
+		}
+	}));
+	
+	answerContent.querySelectorAll('.hidden-answer-image').forEach(file => file.addEventListener('change', function(ev){
+		this.parentElement.querySelector('.image-btn').src = TRASH_IMAGE_ICON;
+		                   
+        const uploadedFiles = ev.target.files;
+        
+        let parentElement = this.parentElement;
+        
+        this.closest('.question-container').querySelector('.hasModified').value = true;
+        parentElement.querySelector('.answer-image-modified').value = true;
+
+        if (uploadedFiles && uploadedFiles[0]) {
+            const file = uploadedFiles[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+				let answerImageCont = document.createElement('img');
+				answerImageCont.classList.add('answer-image');
+                answerImageCont.src = e.target.result;
+                parentElement.insertAdjacentElement('afterend', answerImageCont);
+            };
+
+            reader.readAsDataURL(file); 
+        }	
+	}));		
+	
+	answerContainer.appendChild(answerContent);
+	
 	return answerContainer;
+}
+
+function getLetter(answerNo){
+	return String.fromCharCode(65 + answerNo-1);
 }

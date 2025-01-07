@@ -302,4 +302,10 @@ public class QuestionaireLogicImpl implements QuestionaireLogic{
 		return questionaireDao.getQuestonaireSettings(id);
 	}
 
+	@Override
+	public void updateAnswerImageByAnswerId(String answerImage, int answerId) {
+		
+		answerDao.updateAnswerImage(answerImage, answerId);
+	}
+
 }
