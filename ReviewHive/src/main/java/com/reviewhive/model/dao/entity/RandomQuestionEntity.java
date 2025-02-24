@@ -7,25 +7,24 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class QuestionaireUserEntity {
+public class RandomQuestionEntity {
 	
-	public QuestionaireUserEntity(Object[] objects) {
+	public RandomQuestionEntity(Object[] objects) {
+		
 		this(
 			(Integer) objects[0],
 			(String) objects[1],
 			(String) objects[2],
-			(String) objects[3],
-			(String) objects[4]
+			null
 		);
+		
 	}
 	
 	private int id;
 	
-	private String abbreviation;
+	private String question;
 	
-	private String questionaireName;
+	private String questionImage;
 	
-	private String hexColor;
-	
-	private String description;
+	private List<AnswerDetailsEntity> answers;
 }

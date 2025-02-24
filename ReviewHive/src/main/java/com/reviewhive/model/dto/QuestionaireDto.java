@@ -8,6 +8,7 @@ import com.reviewhive.model.dao.entity.QuestionDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
 import com.reviewhive.model.dao.entity.QuestionaireUserEntity;
+import com.reviewhive.model.dao.entity.RandomQuestionEntity;
 import com.reviewhive.model.objects.QuestionObj;
 
 import jakarta.validation.constraints.NotBlank;
@@ -76,5 +77,7 @@ public class QuestionaireDto {
 	private List<QuestionaireUserEntity> questionaireUser;
 	
 	private String examType;
+	
+	private RandomQuestionEntity randomQuestion;
 	
 }

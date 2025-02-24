@@ -43,6 +43,13 @@ public class HomeController {
 	public String showQuestions(@PathVariable("id") int id,
 	                            @RequestParam("type") int type, 
 	                            @ModelAttribute QuestionaireDto webDto) {
+		
+		webDto.setId(id);
+		
+		QuestionaireDto outDto = questionaireService.getRandomQuestion(webDto);
+		
+		webDto.setRandomQuestion(outDto.getRandomQuestion());
+		
 	    return "exam";
 	}
 
