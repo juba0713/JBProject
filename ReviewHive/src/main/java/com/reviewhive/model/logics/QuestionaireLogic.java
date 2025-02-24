@@ -12,6 +12,7 @@ import com.reviewhive.model.dao.entity.QuestionEntity;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
 import com.reviewhive.model.dao.entity.QuestionaireSettingsEntity;
+import com.reviewhive.model.dao.entity.QuestionaireUserEntity;
 
 /**
  * @author Julius P. Basas
@@ -194,5 +195,11 @@ public interface QuestionaireLogic {
 	 * @param answerId
 	 */
 	public void updateAnswerImageByAnswerId(String answerImage, int answerId);
+	
+	/**
+	 * To get all the questionaire for user
+	 * @return List<QuestionaireUserEntity>
+	 */
+	public List<QuestionaireUserEntity> getAllQuestionaireForUser();
 	
 }
