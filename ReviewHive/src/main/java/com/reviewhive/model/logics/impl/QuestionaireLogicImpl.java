@@ -17,6 +17,7 @@ import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
 import com.reviewhive.model.dao.entity.QuestionaireSettingsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireUserEntity;
+import com.reviewhive.model.dao.entity.RandomQuestionEntity;
 import com.reviewhive.model.logics.QuestionaireLogic;
 
 /**
@@ -317,6 +318,17 @@ public class QuestionaireLogicImpl implements QuestionaireLogic{
 	public List<QuestionaireUserEntity> getAllQuestionaireForUser() {
 		
 		return questionaireDao.getAllQuestionaireForUser();
+	}
+
+	/**
+	 * Get a random Question by questionaire id
+	 * @param questionaireId
+	 * @return RandomQuestionEntity
+	 */
+	@Override
+	public RandomQuestionEntity getRandomQuestionByQuestionaireId(int questionaireId) {
+		
+		return questionDao.getRandomQUestionByQuestionaireId(questionaireId);
 	}
 
 }

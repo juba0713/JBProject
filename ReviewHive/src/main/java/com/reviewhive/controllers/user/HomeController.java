@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.reviewhive.model.dto.QuestionaireDto;
@@ -26,7 +27,8 @@ public class HomeController {
 	}
 	
 	@GetMapping("/questionaire")
-	public String showQuestionaire(@RequestParam("id") int id, @ModelAttribute QuestionaireDto webDto) {
+	public String showQuestionaire(@RequestParam("id") int id, 
+			@ModelAttribute QuestionaireDto webDto) {
 		
 		webDto.setId(id);
 		
@@ -36,4 +38,19 @@ public class HomeController {
 		
 		return "questionaire";
 	}
+	
+	@GetMapping("/questionaire/{id}")
+	public String showQuestions(@PathVariable("id") int id,
+	                            @RequestParam("type") int type, 
+	                            @ModelAttribute QuestionaireDto webDto) {
+		
+		webDto.setId(id);
+		
+		QuestionaireDto outDto = questionaireService.getRandomQuestion(webDto);
+		
+		webDto.setRandomQuestion(outDto.getRandomQuestion());
+		
+	    return "exam";
+	}
+
 }

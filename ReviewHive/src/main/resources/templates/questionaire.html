@@ -19,13 +19,14 @@
 				<a class="action-btn" th:href="@{/}">BACK</a>
 			</div>
 			<div class="content">
+				<input type="hidden" name="questionaireIdPk" th:value="*{questionaire.id}" id="questionaireId" />
 				<div class="main-content">
 					<div>Questions: 1000</div>
 					<div class="questionaire-name" th:text="*{questionaire.questionaireName}"></div>
 					<div class="questionaire-description" th:text="*{questionaire.description}">Description</div>
 					<div class="buttons">
-						<button class="action-btn">Demo Exam</button>
-						<button class="action-btn">Flashcards</button>
+						<button class="action-btn exam-btn" id="1">DEMO EXAM</button>
+						<button class="action-btn exam-btn" id="2">FLASHCARDS</button>
 					</div>
 				</div>
 				<div class="statistics">
@@ -56,8 +57,6 @@
 
 		</div>
 	</main>
-	
-	<script th:src="@{/js/home.js}"></script>
 	<script th:inline="javascript"> 
 		console.log(/*[[${questionaireDto}]]*/'');
 		
@@ -77,19 +76,43 @@
 		});
 		
 		var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-		var yValues = [0,10,20,30,40,50,60,70,80,90,100];
-		var barColors = ["red", "green","blue","orange","brown"];
+		var yValues = [10, 20, 30, 40, 50]; // Adjusted sample values
+		var barColors = ["red", "green", "blue", "orange", "brown"];
 
 		var scoreChart = new Chart("scoreChart", {
 		  type: "bar",
 		  data: {
 		    labels: xValues,
 		    datasets: [{
+		      label: "Score",  // <-- Fix legend label
 		      backgroundColor: barColors,
 		      data: yValues
 		    }]
+		  },
+		  options: {
+		    plugins: {
+		      title: {
+		        display: true,
+		        text: "Score Graph",  // <-- Add the title text
+		        font: {
+		          size: 20,
+		          weight: "bold"
+		        },
+		        color: "#333",
+		        padding: {
+		          top: 10,
+		          bottom: 20
+		        }
+		      }
+		    }
 		  }
 		});
+
+		
+		document.querySelectorAll('.exam-btn').forEach(btn => btn.addEventListener('click', function(){
+			const questionaireId = document.getElementById('questionaireId').value;
+			window.location.href = `/questionaire/${questionaireId}?type=${this.id}`;
+		}));
 
 
 

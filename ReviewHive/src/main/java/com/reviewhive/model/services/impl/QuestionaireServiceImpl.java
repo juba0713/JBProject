@@ -24,6 +24,7 @@ import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
 import com.reviewhive.model.dao.entity.QuestionaireSettingsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireUserEntity;
+import com.reviewhive.model.dao.entity.RandomQuestionEntity;
 import com.reviewhive.model.dto.QuestionaireDto;
 import com.reviewhive.model.logics.QuestionaireLogic;
 import com.reviewhive.model.objects.AnswerObj;
@@ -381,6 +382,23 @@ public class QuestionaireServiceImpl implements QuestionaireService {
 		List<QuestionaireUserEntity> questionaires = questionaireLogic.getAllQuestionaireForUser();
 		
 		outDto.setQuestionaireUser(questionaires);
+		
+		return outDto;
+	}
+
+	/**
+	 * Get a random Question 
+	 * @param inDto
+	 * @return QuestionaireDto
+	 */
+	@Override
+	public QuestionaireDto getRandomQuestion(QuestionaireDto inDto) {
+		
+		QuestionaireDto outDto = new QuestionaireDto();
+		
+		RandomQuestionEntity question = questionaireLogic.getRandomQuestionByQuestionaireId(inDto.getId());
+		
+		outDto.setRandomQuestion(question);
 		
 		return outDto;
 	}

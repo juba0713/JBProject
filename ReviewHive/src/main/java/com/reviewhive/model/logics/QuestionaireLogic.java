@@ -13,6 +13,7 @@ import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
 import com.reviewhive.model.dao.entity.QuestionaireSettingsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireUserEntity;
+import com.reviewhive.model.dao.entity.RandomQuestionEntity;
 
 /**
  * @author Julius P. Basas
@@ -201,5 +202,12 @@ public interface QuestionaireLogic {
 	 * @return List<QuestionaireUserEntity>
 	 */
 	public List<QuestionaireUserEntity> getAllQuestionaireForUser();
+	
+	/**
+	 * Get a random Question by questionaire id
+	 * @param questionaireId
+	 * @return RandomQuestionEntity
+	 */
+	public RandomQuestionEntity getRandomQuestionByQuestionaireId(int questionaireId);
 	
 }

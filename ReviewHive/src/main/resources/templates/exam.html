@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Review Hive - Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" th:href="@{/css/fragments/header.css}"/>
+<link rel="stylesheet" th:href="@{/css/common.css}"/>
+<link rel="stylesheet" th:href="@{/css/exam.css}"/>
+</head>
+<body th:object="${questionaireDto}">
+	<main>
+		<nav th:replace="~{/fragments/header :: header}"></nav>
+		<div class="container">
+			<div class="content-header">
+				<div class="flash-cards">
+					<div>
+						<img th:src="@{/icons/question.svg}">
+						<label>100</label>
+					</div>
+					<div>
+						<img th:src="@{/icons/check.svg}">
+						<label>100</label>
+					</div>
+					<div>
+						<img th:src="@{/icons/wrong.svg}">
+						<label>100</label>
+					</div>
+					<div>
+						<img th:src="@{/icons/skip.svg}">
+						<label>100</label>
+					</div>
+				</div>
+				<div class="buttons">
+					<a class="action-btn" th:href="@{/}">BACK</a>
+				</div>
+				
+			</div>
+			<div class="content">
+				<!-- <div>
+					<button class="action-btn start-btn">Start</button>
+				</div> -->
+				<div class="question-container">
+					<div class="question">
+						<label th:text="*{randomQuestion.question}"></label>
+						
+					</div>
+					<div class="answers">
+						<div class="answer" th:each="answer : *{randomQuestion.answers}" th:id="${answer.id}">
+							<label th:text="${answer.answer}">Hello</label>						
+						</div>
+					</div>
+					<button class="action-btn">SKIP</button>
+				</div>
+				
+			</div>
+		</div>
+	</main>
+	
+	<script th:src="@{/js/exam.js}"></script>
+	<script th:inline="javascript"> 
+		const dto = /*[[${questionaireDto}]]*/'';
+		
+	</script>
+</body>
+</html>

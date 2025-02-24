@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.reviewhive.model.dao.entity.AnswerDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionEntity;
+import com.reviewhive.model.dao.entity.RandomQuestionEntity;
 
 /**
  * @author Julius P. Basas
@@ -145,4 +146,50 @@ public interface QuestionDao extends JpaRepository<QuestionEntity, Integer>{
 	@Query(value=UPDATE_QUESTION_IMAGE_BY_ID, nativeQuery=true)
 	public void updateQuestionImageById(@Param("questionImage") String questionImage,
 			@Param("questionId") int questionId);
+	
+	/*
+	 * Query for retrieving a random question using questionaire id
+	 */
+	public static final String GET_RANDOM_QUESTION_BY_QUESTIONAIRE_ID = "SELECT q.id,\r\n"
+			+ "q.question,\r\n"
+			+ "q.question_image\r\n"
+			+ "FROM m_question q\r\n"
+			+ "WHERE q.questionaire_id = 1\r\n"
+			+ "ORDER BY RANDOM()\r\n"
+			+ "LIMIT 1;\r\n";
+	
+	@Query(value=GET_RANDOM_QUESTION_BY_QUESTIONAIRE_ID, nativeQuery=true)
+	public List<Object[]> getRandomQUestionByQuestionaireIdRaw(int questionId) throws DataAccessException;
+	
+	/**
+	 * Get Question Details along with the answers
+	 * @param questionaireId
+	 * @return
+	 */
+	default RandomQuestionEntity getRandomQUestionByQuestionaireId(int questionaireId){
+		
+		List<Object[]> rawData = getRandomQUestionByQuestionaireIdRaw(questionaireId);
+		
+		if(rawData.size() == 0) {
+			return null;
+		}
+		
+		RandomQuestionEntity question = new RandomQuestionEntity(rawData.get(0));
+		
+		List<AnswerDetailsEntity> answers = new ArrayList<>();
+		
+		List<Object[]> answersRaw = getAnswerDetailsByQuestionIdRaw(question.getId());
+		
+		for(Object[] aObject : answersRaw) {
+			
+			AnswerDetailsEntity answer = new AnswerDetailsEntity(aObject);
+			
+			answers.add(answer);
+		}
+		
+		question.setAnswers(answers);
+		
+		return question;
+	}
+	
 }
