@@ -29,8 +29,8 @@ public interface QuestionaireService {
 	/**
 	 * Get Questionaire by its id
 	 * @param inDto
-	 * @return
-	 */
+	 * @return QuestionaireDto
+	 */ 
 	public QuestionaireDto getQuestionaireById(QuestionaireDto inDto);
 	
 	/**
@@ -48,7 +48,13 @@ public interface QuestionaireService {
 	/**
 	 * Get Questionaire Questions & Answers
 	 * @param inDto
-	 * @return
+	 * @return QuestionaireDto
 	 */
 	public QuestionaireDto getQuestionaireQuestions(QuestionaireDto inDto);
+	
+	/**
+	 * To get all the questionaire for user
+	 * @return QuestionaireDto
+	 */
+	public QuestionaireDto getQuestionaireForUser();
 }

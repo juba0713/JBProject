@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
 import com.reviewhive.model.dao.entity.QuestionaireSettingsEntity;
+import com.reviewhive.model.dao.entity.QuestionaireUserEntity;
 
 /**
  * @author Julius P. Basas
@@ -229,5 +230,41 @@ public interface QuestionaireDao extends JpaRepository<QuestionaireEntity, Integ
 	    QuestionaireSettingsEntity questionaireSettings = new QuestionaireSettingsEntity(rawResults.get(0));  
 	    	
 	    return questionaireSettings;
+	}
+	
+	/*
+	 * Query for getting all the questionaire for user
+	 */
+	public final String GET_ALL_QUESTIONAIRE_FOR_USER = "SELECT q.id, "
+			+ "q.abbreviation, "
+			+ "q.questionaire_name, "
+			+ "q.hex_color, "
+			+ "q.description "
+			+ "FROM m_questionaire q "
+			+ "WHERE q.delete_flg = false ";
+	
+	/**
+	 * Get Questionaire For User Raw
+	 * @return List<Object[]>
+	 * @throws DataAccessException
+	 */
+	@Query(value=GET_ALL_QUESTIONAIRE_FOR_USER, nativeQuery=true)
+	public List<Object[]> getAllQuestionaireForUserRaw() throws DataAccessException;
+	
+	/**
+	 * Get Questionaire For User
+	 * @return List<QuestionaireUserEntity>
+	 */
+	default List<QuestionaireUserEntity> getAllQuestionaireForUser(){
+		
+		List<Object[]> rawResults = getAllQuestionaireForUserRaw();
+	    List<QuestionaireUserEntity> questionaires = new ArrayList<>();
+	    
+	    for (Object[] objects : rawResults) {
+	    	QuestionaireUserEntity questionaire = new QuestionaireUserEntity(objects);  
+	    	questionaires.add(questionaire);
+	    }
+
+	    return questionaires;
 	}
 }

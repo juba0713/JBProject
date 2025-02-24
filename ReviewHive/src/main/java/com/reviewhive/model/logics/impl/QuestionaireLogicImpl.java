@@ -16,6 +16,7 @@ import com.reviewhive.model.dao.entity.QuestionEntity;
 import com.reviewhive.model.dao.entity.QuestionaireDetailsEntity;
 import com.reviewhive.model.dao.entity.QuestionaireEntity;
 import com.reviewhive.model.dao.entity.QuestionaireSettingsEntity;
+import com.reviewhive.model.dao.entity.QuestionaireUserEntity;
 import com.reviewhive.model.logics.QuestionaireLogic;
 
 /**
@@ -306,6 +307,16 @@ public class QuestionaireLogicImpl implements QuestionaireLogic{
 	public void updateAnswerImageByAnswerId(String answerImage, int answerId) {
 		
 		answerDao.updateAnswerImage(answerImage, answerId);
+	}
+
+	/**
+	 * To get all the questionaire for user
+	 * @return List<QuestionaireUserEntity>
+	 */
+	@Override
+	public List<QuestionaireUserEntity> getAllQuestionaireForUser() {
+		
+		return questionaireDao.getAllQuestionaireForUser();
 	}
 
 }
