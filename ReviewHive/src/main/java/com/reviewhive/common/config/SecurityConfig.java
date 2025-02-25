@@ -60,6 +60,7 @@ public class SecurityConfig {
 						.requestMatchers("/fonts/**").permitAll()
 						.requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
 						.requestMatchers("/questionaire/**").permitAll()
+						.requestMatchers("/retrieve/**").permitAll()
 						.anyRequest().authenticated())
 				.formLogin((form) -> form
 						.loginPage("/admin/login")

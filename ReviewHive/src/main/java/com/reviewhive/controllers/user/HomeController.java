@@ -1,6 +1,7 @@
 package com.reviewhive.controllers.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,7 +21,7 @@ public class HomeController {
 	public String showHomePage(@ModelAttribute QuestionaireDto webDto) {
 		
 		QuestionaireDto outDto = questionaireService.getQuestionaireForUser();
-		
+		 
 		webDto.setQuestionaireUser(outDto.getQuestionaireUser());
 		
 		return "home";
@@ -46,11 +47,27 @@ public class HomeController {
 		
 		webDto.setId(id);
 		
+		webDto.setExamType(type);
+		
 		QuestionaireDto outDto = questionaireService.getRandomQuestion(webDto);
 		
 		webDto.setRandomQuestion(outDto.getRandomQuestion());
 		
 	    return "exam";
 	}
+	
+	@GetMapping("/retrieve/questionaire/{id}")
+	public ResponseEntity<QuestionaireDto> retrieveRandomQuestion(@PathVariable("id") int id,
+	                            @RequestParam("type") int type) {
+		
+		QuestionaireDto inDto = new QuestionaireDto();
+		
+		inDto.setId(id);
+	
+		QuestionaireDto outDto = questionaireService.getRandomQuestion(inDto);
+		
+		return ResponseEntity.ok(outDto);
+	}
+	
 
 }
