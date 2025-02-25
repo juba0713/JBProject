@@ -76,7 +76,7 @@ public class QuestionaireDto {
 	
 	private List<QuestionaireUserEntity> questionaireUser;
 	
-	private String examType;
+	private int examType;
 	
 	private RandomQuestionEntity randomQuestion;
 	
